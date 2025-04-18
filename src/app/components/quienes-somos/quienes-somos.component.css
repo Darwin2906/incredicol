@@ -1,0 +1,110 @@
+/* Estilos generales */
+.quienes-somos {
+    text-align: center;
+}
+
+.quienes-somos-title {
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+.quienes-somos-text {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-left: 4px solid #33ca2e;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+h1, h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    text-align: justify;
+}
+
+/* Beneficios */
+.benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 0px;
+}
+
+.benefits-title {
+    margin-bottom: 15px;
+}
+
+.benefit-item {
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 10px;
+    width: 270px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.benefit-item:hover {
+    transform: scale(1.05);
+}
+
+/* Sección de Plataformas Fintech */
+.fintech-platforms {
+    padding: 40px;
+    text-align: center;
+}
+
+.fintech-platforms-title {
+    margin-top: 0%;
+}
+
+.platform-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.platform-item {
+    display: flex;
+    align-items: center;
+    width: 260px;
+    padding: 18px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 20px;
+    transition: transform 0.3s;
+    margin-top: 15px;
+}
+
+.platform-item:hover {
+    transform: scale(1.05);
+}
+
+/* Círculo numerado */
+.circle {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    border: 2px solid black;
+    text-align: center;
+    font-size: 18px;
+    margin-right: 10px;
+    background: white;
+}
+
+/* Colores de las tarjetas */
+.yellow { background: #fff9c4; }
+.green-light { background: #c8e6c9; }
+.green-dark { background: #80cbc4; }
+.blue-light { background: #90caf9; }
+.blue-dark { background: #4db6ac; }
+

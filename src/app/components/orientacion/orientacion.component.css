@@ -1,0 +1,146 @@
+.contenedor-orientacion {
+    font-family: 'Segoe UI', sans-serif;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Sección Microcrédito */
+.microcredito {
+    text-align: center;
+    margin-top: -25px;
+}
+
+.text-principal{
+    font-size: 18px;
+    background: white;
+    border-left: 4px solid #33ca2e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem 1.5rem;
+    max-width: 75%;
+    margin: 0 auto;
+}
+
+.microcredito h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Sección Cómo funciona */
+.funciona {
+    text-align: center;
+    margin-top: -45px;
+}
+
+.funciona h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.tarjeta {
+    border-left: 4px solid #33ca2e;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.2rem 1.5rem;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    transition: transform 0.3s;
+}
+
+.tarjeta:hover {
+    transform: scale(1.05);
+}
+
+.tarjeta h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+/* Sección Riesgos */
+.riesgos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+}
+
+.riesgos h3 {
+    font-size: 1.5rem;
+    margin-bottom: -10px;
+}
+
+.texto-secun {
+    font-size: 18px;
+}
+
+.riesgo-circulo {
+    font-size: 17px;
+    border-radius: 50%;
+    width: 230px;
+    height: 230px;
+    padding: 2rem;
+    text-align: center;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.riesgo-circulo:hover {
+    transform: scale(1.05);
+}
+
+.mensaje-central {
+    background-color: #d4f4b0;
+    color: #1b1b1b;
+    width: 280px;
+    height: 280px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.riesgo-circulo.azul {
+    background-color: #4a9ca9;
+}
+
+.riesgo-circulo.verde {
+    background-color: #63c2a4;
+}
+
+.riesgo-circulo.aqua {
+    background-color: #4caeb8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .tarjetas,
+    .riesgos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .riesgo-circulo {
+        width: 220px;
+        height: 220px;
+    }
+
+    .mensaje-central {
+        width: 260px;
+        height: 260px;
+    }
+}
