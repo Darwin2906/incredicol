@@ -9,24 +9,53 @@
 }
 
 .quienes-somos-text {
-    background: rgb(255, 255, 255);
+    font-size: 18px;
+    background-color: #fff;
     padding: 20px;
     border-left: 4px solid #33ca2e;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    text-align: justify;
+    height: 180px;
+    width: 500px;   
+    margin-left: 45px;
 }
 
-h1, h2 {
-    font-size: 24px;
-    margin-bottom: 5px;
+.quienes-somos-contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-right: 30px;
+    align-items: center;  /* Asegura que el contenido esté alineado verticalmente */
 }
 
+.quienes-somos-img {
+    margin-right: -20px;
+    align-self: center;  /* Asegura que la imagen se centre verticalmente */
+    width: 250px;
+    height: 350px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    object-fit: cover;  /* Asegura que la imagen no se deforme */
+}
+
+
+/* Estilos de párrafos */
 p {
     font-size: 18px;
     line-height: 1.5;
     max-width: 800px;
     margin: 0 auto 20px;
     text-align: justify;
+}
+
+/* Estilo de encabezados */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5px;
 }
 
 /* Beneficios */
@@ -62,7 +91,7 @@ p {
 }
 
 .fintech-platforms-title {
-    margin-top: 0%;
+    margin-top: 0;
 }
 
 .platform-list {
@@ -102,9 +131,22 @@ p {
 }
 
 /* Colores de las tarjetas */
-.yellow { background: #fff9c4; }
-.green-light { background: #c8e6c9; }
-.green-dark { background: #80cbc4; }
-.blue-light { background: #90caf9; }
-.blue-dark { background: #4db6ac; }
+.yellow {
+    background: #fff9c4;
+}
 
+.green-light {
+    background: #c8e6c9;
+}
+
+.green-dark {
+    background: #80cbc4;
+}
+
+.blue-light {
+    background: #90caf9;
+}
+
+.blue-dark {
+    background: #4db6ac;
+}

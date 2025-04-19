@@ -12,8 +12,13 @@
     margin-top: -25px;
 }
 
+p {
+    text-align: justify;
+}
+
 .text-principal{
     font-size: 18px;
+    text-align: justify;
     background: white;
     border-left: 4px solid #33ca2e;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -47,6 +52,9 @@
 
 .tarjeta {
     border-left: 4px solid #33ca2e;
+    border-bottom: 4px solid #33ca2e;
+    border-top: 4px solid #33ca2e;
+    border-right: 4px solid #33ca2e;
     background: white;
     border-radius: 1rem;
     padding: 1.2rem 1.5rem;
