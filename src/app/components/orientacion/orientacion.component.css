@@ -16,7 +16,7 @@ p {
     text-align: justify;
 }
 
-.text-principal{
+.text-principal {
     font-size: 18px;
     text-align: justify;
     background: white;
@@ -133,9 +133,67 @@ p {
     background-color: #4caeb8;
 }
 
+/* Preguntas Frecuentes (Accordion) */
+
+.preguntas-frecuentes {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin-top: -30px;
+}
+
+.preguntas-frecuentes h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.preguntas-frecuentes details {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 0 auto 1rem auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 18px;
+    text-align: left;
+}
+
+.preguntas-frecuentes details[open] {
+    background-color: #93eb9f;
+    color: #000000;
+}
+
+.preguntas-frecuentes summary {
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    padding-right: 20px;
+}
+
+.preguntas-frecuentes summary::after {
+    content: "▼";
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.preguntas-frecuentes details[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.preguntas-frecuentes p {
+    margin-top: 1rem;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-
     .tarjetas,
     .riesgos {
         flex-direction: column;
