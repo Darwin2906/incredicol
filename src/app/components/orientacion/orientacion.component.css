@@ -191,22 +191,3 @@ p {
     font-size: 17px;
     line-height: 1.5;
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .tarjetas,
-    .riesgos {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .riesgo-circulo {
-        width: 220px;
-        height: 220px;
-    }
-
-    .mensaje-central {
-        width: 260px;
-        height: 260px;
-    }
-}

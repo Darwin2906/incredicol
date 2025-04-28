@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RapicreditComponent } from './rapicredit.component';
+import { ComparacionComponent } from './comparacion.component';
 
-describe('RapicreditComponent', () => {
-  let component: RapicreditComponent;
-  let fixture: ComponentFixture<RapicreditComponent>;
+describe('ComparacionComponent', () => {
+  let component: ComparacionComponent;
+  let fixture: ComponentFixture<ComparacionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RapicreditComponent]
+      imports: [ComparacionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RapicreditComponent);
+    fixture = TestBed.createComponent(ComparacionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
