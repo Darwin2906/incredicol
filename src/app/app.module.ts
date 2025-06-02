@@ -1,26 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 import { AppComponent } from './app.component';
-import { QuienesSomosComponent } from './components/quienes-somos/quienes-somos.component';
-import { OrientacionComponent } from './components/orientacion/orientacion.component';
-import { PlataformasComponent } from './components/plataformas/plataformas.component';
 import { ComparacionComponent } from './components/comparacion/comparacion.component';
-import { routes } from './app.routes';
+import { SimuladorRapicreditComponent } from './components/simuladores/rapicredit/simulador-rapicredit.component';
+
+import { routes } from './app.routes'; // 👈 Importa tus rutas definidas
 
 @NgModule({
   declarations: [
     AppComponent,
-    QuienesSomosComponent,
-    OrientacionComponent,
-    PlataformasComponent,
-    ComparacionComponent
+    ComparacionComponent,
+    SimuladorRapicreditComponent // Asegúrate de declarar todos los componentes que uses
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes)
+    FormsModule,
+    RouterModule.forRoot(routes) // 👈 Usa tus rutas aquí
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

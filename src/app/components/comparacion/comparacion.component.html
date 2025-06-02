@@ -1,1 +1,35 @@
-<p>comparacion works!</p>
+<div class="container mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6 text-center">Comparador de Préstamos</h1>
+
+  <!-- Filtros -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div>
+      <label class="block mb-1 font-semibold">Monto solicitado</label>
+      <input type="number" [(ngModel)]="monto" (ngModelChange)="calcularOpciones()" class="w-full p-2 border rounded" placeholder="Ej: 500000">
+    </div>
+    <div>
+      <label class="block mb-1 font-semibold">Plazo en días</label>
+      <input type="number" [(ngModel)]="plazo" (ngModelChange)="calcularOpciones()" class="w-full p-2 border rounded" placeholder="Ej: 30">
+    </div>
+
+  <!-- Resultados -->
+  <div *ngIf="plataformasFiltradas.length > 0; else sinResultados" class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div *ngFor="let plataforma of plataformasFiltradas" class="border rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-2">{{ plataforma.nombre }}</h2>
+      <p><strong>Monto mínimo:</strong> {{ plataforma.montoMin | currency:'COP':'symbol' }}</p>
+      <p><strong>Monto máximo:</strong> {{ plataforma.montoMax | currency:'COP':'symbol' }}</p>
+      <p><strong>Plazos:</strong> {{ plataforma.plazos.join(', ') }} días</p>
+
+      <button 
+        class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        (click)="irASimulador(plataforma.simuladorRuta)">
+        Ir al Simulador
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay resultados -->
+  <ng-template #sinResultados>
+    <p class="text-center text-gray-600 mt-10">No se encontraron plataformas con los criterios seleccionados.</p>
+  </ng-template>
+</div>

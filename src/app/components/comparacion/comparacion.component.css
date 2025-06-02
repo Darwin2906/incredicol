@@ -1,0 +1,66 @@
+.comparador-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  flex: 1 1 250px;
+}
+
+.opciones-listado {
+  display: grid;
+  gap: 1rem;
+}
+
+.opcion-prestamo {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.opcion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge {
+  background-color: #28a745;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+}
+
+.btn-simular,
+.btn-faq {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  text-decoration: none;
+  background: #007bff;
+  color: white;
+  border-radius: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-faq {
+  background: #6c757d;
+  margin-left: 1rem;
+}
+
+.sin-resultados {
+  text-align: center;
+  margin-top: 2rem;
+  color: #888;
+}

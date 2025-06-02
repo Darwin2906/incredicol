@@ -1,0 +1,53 @@
+<div class="simulador-container">
+  <h2>Simulador Rapicredit</h2>
+  
+  <div class="parametros">
+    <div class="form-group">
+      <label for="monto">Monto solicitado (COP):</label>
+      <input type="range" id="monto" [(ngModel)]="monto" 
+             [min]="montoMin" [max]="montoMax" step="50000"
+             (change)="actualizarSimulacion()">
+      <span>{{ monto | currency:'COP':'symbol':'1.0-0' }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="plazo">Plazo (días):</label>
+      <select id="plazo" [(ngModel)]="plazo" (change)="actualizarSimulacion()">
+        <option *ngFor="let p of plazosDisponibles" [value]="p">{{ p }} días</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="resultados">
+    <h3>Resultado de la simulación</h3>
+    <table>
+      <tr>
+        <th>Concepto</th>
+        <th>Valor</th>
+      </tr>
+      <tr>
+        <td>Monto solicitado:</td>
+        <td>{{ monto | currency:'COP':'symbol':'1.0-0' }}</td>
+      </tr>
+      <tr>
+        <td>Intereses:</td>
+        <td>{{ interes | currency:'COP':'symbol':'1.0-0' }}</td>
+      </tr>
+      <tr>
+        <td>Comisiones:</td>
+        <td>{{ comision | currency:'COP':'symbol':'1.0-0' }}</td>
+      </tr>
+      <tr class="total">
+        <td>Total a pagar:</td>
+        <td>{{ pagoTotal | currency:'COP':'symbol':'1.0-0' }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="acciones">
+    <button class="btn-solicitar">Solicitar este préstamo</button>
+    <a [href]="'https://www.rapicredit.com'" target="_blank" class="btn-externo">
+      Ir a Rapicredit
+    </a>
+  </div>
+</div>
