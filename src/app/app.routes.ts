@@ -11,7 +11,7 @@ import { SimuladorSolventaComponent } from './components/simuladores/solventa/si
 import { SimuladorWasticreditComponent } from './components/simuladores/wasticredit/simulador-wasticredit.component';
 import { SimuladorDoctorpesoComponent } from './components/simuladores/doctorpeso/simulador-doctorpeso.component';
 import { SimuladorRayoComponent } from './components/simuladores/rayo/simulador-rayo.component';
-import { FinancashComponent } from './components/simuladores/financash/financash.component';
+import { FinancashComponent } from './components/simuladores/financash/simulador-financash.component';
 
 export const routes: Routes = [
   {
