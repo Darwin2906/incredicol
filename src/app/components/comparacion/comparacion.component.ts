@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // ← IMPORTANTE
 import { Plataforma } from '../../models/plataforma.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-comparacion',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './comparacion.component.html',
   styleUrls: ['./comparacion.component.css']
 })
 export class ComparacionComponent implements OnInit {
-  monto: number = 300000;
+  monto: number = 100000;
   plazo: number = 30;
+
+  constructor(private router: Router) {} // ← AÑADE ESTO
 
   plataformas: Plataforma[] = [
     {
@@ -25,8 +32,7 @@ export class ComparacionComponent implements OnInit {
       destacado: true,
       rutaSimulador: 'rapicredit',
       faqUrl: 'https://www.rapicredit.com.co/faq'
-    },
-    // Puedes agregar más plataformas aquí...
+    }
   ];
 
   plataformasFiltradas: any[] = [];
@@ -60,6 +66,11 @@ export class ComparacionComponent implements OnInit {
   }
 
   irASimulador(id: string) {
-    window.location.href = `/simulador-${id}?monto=${this.monto}&plazo=${this.plazo}`;
+    this.router.navigate([`/simulador-${id}`], {
+      queryParams: {
+        monto: this.monto,
+        plazo: this.plazo
+      }
+    });
   }
 }

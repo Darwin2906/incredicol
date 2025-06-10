@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data, Params } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-simulador-rapicredit',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './simulador-rapicredit.component.html',
   styleUrls: ['./simulador-rapicredit.component.css']
 })
@@ -20,39 +23,37 @@ export class SimuladorRapicreditComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    // Configuración desde los datos de la ruta
-    const routeData = this.route.snapshot.data;
-    this.montoMin = routeData['montoMin'];
-    this.montoMax = routeData['montoMax'];
-    this.plazosDisponibles = routeData['plazos'];
+    this.route.data.subscribe((data: Data) => {
+      this.montoMin = data['montoMin'];
+      this.montoMax = data['montoMax'];
+      this.plazosDisponibles = data['plazos'];
+    });
 
-    // Parámetros de consulta
-    this.route.queryParams.subscribe(params => {
-      this.monto = Math.min(Math.max(+params['monto'] || this.montoMin, this.montoMax));
-      this.plazo = this.plazosDisponibles.includes(+params['plazo']) 
-        ? +params['plazo'] 
+    this.route.queryParams.subscribe((params: Params) => {
+      const montoParam = +params['monto'];
+      const plazoParam = +params['plazo'];
+
+      this.monto = isNaN(montoParam)
+        ? this.montoMin
+        : Math.min(Math.max(montoParam, this.montoMin), this.montoMax);
+
+      this.plazo = this.plazosDisponibles.includes(plazoParam)
+        ? plazoParam
         : this.plazosDisponibles[0];
+
       this.calcularPrestamo();
     });
   }
 
   calcularPrestamo() {
-    // Lógica específica de Rapicredit (ajusta según tus necesidades)
-    const tasaDiaria = 0.0008; // Ejemplo: 0.08% diario
+    const tasaDiaria = 0.0008; // 0.08% diario
     this.interes = this.monto * tasaDiaria * this.plazo;
-    this.comision = this.monto * 0.05; // 5% de comisión
+    this.comision = this.monto * 0.05;
     this.pagoTotal = this.monto + this.interes + this.comision;
   }
 
   actualizarSimulacion() {
     this.calcularPrestamo();
-    // Aquí podrías navegar con los nuevos parámetros
-    // this.router.navigate([], { 
-    //   queryParams: { 
-    //     monto: this.monto, 
-    //     plazo: this.plazo 
-    //   },
-    //   queryParamsHandling: 'merge'
-    // });
+
   }
 }

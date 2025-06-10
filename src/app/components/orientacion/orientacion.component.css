@@ -6,6 +6,15 @@
     gap: 3rem;
 }
 
+h2 {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+    margin-bottom: 1.5rem;
+    color: #000000;
+}
+
 /* Sección Microcrédito */
 .microcredito {
     text-align: center;
@@ -15,6 +24,8 @@
 p {
     text-align: justify;
 }
+
+
 
 .text-principal {
     font-size: 18px;
@@ -89,10 +100,6 @@ p {
     margin-bottom: -10px;
 }
 
-.texto-secun {
-    font-size: 18px;
-}
-
 .riesgo-circulo {
     font-size: 17px;
     border-radius: 50%;
@@ -117,7 +124,6 @@ p {
     color: #1b1b1b;
     width: 280px;
     height: 280px;
-    font-weight: bold;
     font-size: 24px;
 }
 
