@@ -1,0 +1,159 @@
+.simulador-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    border-top: 8px solid #33ca2e;
+    text-align: center;
+
+}
+
+.simulador-container h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0.5rem 0;
+  accent-color: #2c6de9;
+}
+
+.monto-valor {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #000000;
+  font-weight: bold;
+}
+
+.cuotas-selector {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.cuotas-selector button {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  background: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cuotas-selector button.selected {
+  border-color: #33ca2e;
+  background: #e8fbe7;
+  font-weight: bold;
+}
+
+.cuotas-selector button:hover {
+  background: #f0f0f0;
+}
+
+.fecha-opciones-horizontal {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tarjeta-fecha {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  background-color: #f5f5f5;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-fecha.seleccionada {
+  border-color: #33ca2e;
+  background-color: #e0ffe0;
+  font-weight: bold;
+}
+
+.resultados {
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.resultados p {
+  margin: 0.5rem 0;
+}
+
+.credit-score-meter {
+  margin-top: 1rem;
+  position: relative;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.credit-score-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.pago-rango {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin: 1.5rem 0 1rem;
+  padding: 0 1rem;
+}
+
+.btn-externo {
+  background: #33ca2e;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 2rem;
+  transition: background 0.3s ease;
+}
+
+.btn-externo:hover {
+  background: #28a825;
+}
+
+@media (max-width: 600px) {
+  .simulador-container {
+    padding: 1rem;
+  }
+
+  .fecha-opciones-horizontal {
+    flex-direction: column;
+  }
+
+  .pago-rango {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

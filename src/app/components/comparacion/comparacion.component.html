@@ -17,8 +17,8 @@
         required
         placeholder="Ej: 500000"
       />
-      <small *ngIf="monto < 100000 || monto > 2000000" class="text-danger">
-        El monto debe estar entre $100.000 y $2.000.000.
+      <small *ngIf="monto < 100000 || monto > 5000000" class="text-danger">
+        El monto debe estar entre $100.000 y $5.000.000.
       </small>
     </div>
 
@@ -31,26 +31,17 @@
         [(ngModel)]="plazo"
         name="plazo"
         (ngModelChange)="calcularOpciones()"
-        [min]="5"
+        [min]="1"
         [max]="150"
         class="form-control"
         required
         placeholder="Ej: 30"
       />
-      <small *ngIf="plazo < 5 || plazo > 150" class="text-danger">
-        El plazo debe estar entre 5 y 150 días.
+      <small *ngIf="plazo < 1 || plazo > 150" class="text-danger">
+        El plazo debe estar entre 1 y 150 días.
       </small>
     </div>
 
-    <!-- Botón calcular -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="calcularOpciones()"
-      [disabled]="monto < 100000 || monto > 2000000 || plazo < 5 || plazo > 150"
-    >
-      Calcular
-    </button>
   </form>
 
   <!-- Resultados -->
@@ -60,18 +51,12 @@
       <thead>
         <tr>
           <th>Plataforma</th>
-          <th>Intereses</th>
-          <th>Comisión</th>
-          <th>Total a pagar</th>
           <th>Ir al simulador</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let p of plataformasFiltradas">
           <td>{{ p.nombre }}</td>
-          <td>{{ p.interes | currency:'COP':'symbol' }}</td>
-          <td>{{ p.comision | currency:'COP':'symbol' }}</td>
-          <td><strong>{{ p.pagoTotal | currency:'COP':'symbol' }}</strong></td>
           <td>
             <button class="btn btn-outline-primary" (click)="irASimulador(p.id)">
               Simular

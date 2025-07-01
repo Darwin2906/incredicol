@@ -38,7 +38,7 @@ export const routes: Routes = [
     path: 'simulador-rapicredit',
     loadComponent: () =>
       import('./components/simuladores/rapicredit/simulador-rapicredit.component')
-        .then(m => m.SimuladorRapicreditComponent),
+        .then(m => m.RapicreditComponent),
     title: 'Simulador Rapicredit - Incredicol',
     data: {
       montoMin: 100000,
@@ -47,7 +47,32 @@ export const routes: Routes = [
     }
   },
   {
+  path: 'simulador-lineru',
+  loadComponent: () =>
+    import('./components/simuladores/lineru/simulador-lineru.component')
+      .then(m => m.LineruComponent),
+  title: 'Simulador Linerú - Incredicol',
+  data: {
+    montoMin: 100000,
+    montoMax: 1000000,
+    plazos: [5, 10, 15, 20, 30]
+  }
+},
+
+  {
+  path: 'simulador-solventa',
+  loadComponent: () =>
+    import('./components/simuladores/solventa/simulador-solventa.component')
+      .then(m => m.SolventaComponent),
+  title: 'Simulador Solventa - Incredicol',
+  data: {
+    montoMin: 150000,
+    montoMax: 5000000,
+    plazos: [1, 3, 6]
+  }
+},
+  {
     path: '**',
     redirectTo: 'quienes-somos'
-  }
+}
 ];

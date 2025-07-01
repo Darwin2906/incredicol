@@ -18,22 +18,53 @@ export class ComparacionComponent implements OnInit {
   constructor(private router: Router) {} // ← AÑADE ESTO
 
   plataformas: Plataforma[] = [
-    {
-      id: 'rapicredit',
-      nombre: 'Rapicredit',
-      montoMin: 100000,
-      montoMax: 1000000,
-      plazoMin: 5,
-      plazoMax: 150,
-      tasaInteres: 0.02,
-      comision: 0.05,
-      tiempoDesembolso: '24 horas',
-      descuentos: '10% si es tu primer crédito',
-      destacado: true,
-      rutaSimulador: 'rapicredit',
-      faqUrl: 'https://www.rapicredit.com.co/faq'
-    }
-  ];
+  {
+    id: 'rapicredit',
+    nombre: 'Rapicredit',
+    montoMin: 100000,
+    montoMax: 1000000,
+    plazoMin: 5,
+    plazoMax: 150,
+    tasaInteres: 0.02,
+    comision: 0.05,
+    tiempoDesembolso: '24 horas',
+    descuentos: '10% si es tu primer crédito',
+    destacado: true,
+    rutaSimulador: 'rapicredit',
+    faqUrl: 'https://www.rapicredit.com.co/faq'
+  },
+  {
+    id: 'lineru',
+    nombre: 'Linerú',
+    montoMin: 100000,
+    montoMax: 1000000,
+    plazoMin: 5,
+    plazoMax: 30,
+    tasaInteres: 0.023, // puedes ajustar si tienes una tasa real
+    comision: 0.03,
+    tiempoDesembolso: 'En minutos',
+    descuentos: 'Disponible según perfil',
+    destacado: false,
+    rutaSimulador: 'lineru',
+    faqUrl: 'https://www.lineru.com/preguntas-frecuentes'
+  },
+  {
+  id: 'solventa',
+  nombre: 'Solventa',
+  montoMin: 150000,
+  montoMax: 5000000,
+  plazoMin: 1,
+  plazoMax: 6,
+  tasaInteres: 0.28,
+  comision: 0.01,
+  tiempoDesembolso: '24 horas',
+  descuentos: 'Tarifas según puntaje crediticio',
+  destacado: true,
+  rutaSimulador: 'solventa',
+  faqUrl: 'https://solventa.co'
+}
+
+];
 
   plataformasFiltradas: any[] = [];
 

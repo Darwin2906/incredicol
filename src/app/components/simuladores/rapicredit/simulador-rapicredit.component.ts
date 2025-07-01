@@ -1,59 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data, Params } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-simulador-rapicredit',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  selector: 'app-rapicredit',
   templateUrl: './simulador-rapicredit.component.html',
-  styleUrls: ['./simulador-rapicredit.component.css']
+  styleUrls: ['./simulador-rapicredit.component.css'],
+  imports: [CommonModule, FormsModule]
 })
-export class SimuladorRapicreditComponent implements OnInit {
-  monto: number = 300000;
-  plazo: number = 30;
-  montoMin: number = 0;
-  montoMax: number = 0;
-  plazosDisponibles: number[] = [];
-  pagoTotal: number = 0;
+export class RapicreditComponent {
+  monto: number = 250000;
+  plazo: number = 15;
+
+  // Tasas
+  tasaDiaria: number = 0.00063; // Equivale a aproximadamente 23% EA
+  tasaAval: number = 0.24157;
+  tasaFirma: number = 0.522;
+
+  // Valores calculados
   interes: number = 0;
-  comision: number = 0;
-
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.data.subscribe((data: Data) => {
-      this.montoMin = data['montoMin'];
-      this.montoMax = data['montoMax'];
-      this.plazosDisponibles = data['plazos'];
-    });
-
-    this.route.queryParams.subscribe((params: Params) => {
-      const montoParam = +params['monto'];
-      const plazoParam = +params['plazo'];
-
-      this.monto = isNaN(montoParam)
-        ? this.montoMin
-        : Math.min(Math.max(montoParam, this.montoMin), this.montoMax);
-
-      this.plazo = this.plazosDisponibles.includes(plazoParam)
-        ? plazoParam
-        : this.plazosDisponibles[0];
-
-      this.calcularPrestamo();
-    });
-  }
+  aval: number = 0;
+  firmaElectronica: number = 0;
+  pagoTotal: number = 0;
 
   calcularPrestamo() {
-    const tasaDiaria = 0.0008; // 0.08% diario
-    this.interes = this.monto * tasaDiaria * this.plazo;
-    this.comision = this.monto * 0.05;
-    this.pagoTotal = this.monto + this.interes + this.comision;
+    this.interes = this.monto * this.tasaDiaria * this.plazo;
+    this.aval = this.monto * this.tasaAval;
+    this.firmaElectronica = this.monto * this.tasaFirma;
+    this.pagoTotal = this.monto + this.interes + this.aval + this.firmaElectronica;
   }
 
-  actualizarSimulacion() {
+  ngOnInit() {
     this.calcularPrestamo();
-
   }
 }
