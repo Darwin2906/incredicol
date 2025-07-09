@@ -11,23 +11,19 @@ import { ActivatedRoute } from '@angular/router';
   imports: [CommonModule, FormsModule]
 })
 export class LineruComponent {
-  monto: number = 900000;
-  plazo: number = 180;
+  monto: number = 300000;
+  plazo: number = 30;
 
-  // Tasas basadas en los ejemplos
-  tasaInteresEA: number = 0.30;      // 30% E.A fija
-  tasaSeguro: number = 0.0045;       // 0.45%
-  tasaAdm: number = 0.0332;          // 3.32%
-  tasaFianza: number = 0.0045;       // 0.45%
-  tasaIVA: number = 0.0056;          // 0.56%
+
+  tasaEA: number = 0.2458;
+  tasaSeguro: number = 0.00449;
+  tasaFianza: number = 0.12602; 
+  administracion: number = 34900;
+  iva: number = 6631; 
 
   interes: number = 0;
   seguro: number = 0;
-  administracion: number = 0;
   fianza: number = 0;
-  iva: number = 0;
-
-  totalCargos: number = 0;
   descuento: number = 0;
   totalPagar: number = 0;
 
@@ -40,21 +36,19 @@ export class LineruComponent {
   }
 
   calcularPrestamo() {
-    // Convertir EA a tasa diaria compuesta
-    const tasaDiaria = Math.pow(1 + this.tasaInteresEA, 1 / 365) - 1;
+    const tasaDiaria = Math.pow(1 + this.tasaEA, 1 / 365) - 1;
 
-    this.interes = this.monto * tasaDiaria * this.plazo;
-    this.seguro = this.monto * this.tasaSeguro;
-    this.administracion = this.monto * this.tasaAdm;
-    this.fianza = this.monto * this.tasaFianza;
-    this.iva = this.monto * this.tasaIVA;
+    this.interes = Math.round(this.monto * tasaDiaria * this.plazo);
+    this.seguro = Math.round(this.monto * this.tasaSeguro);
+    this.fianza = Math.round(this.monto * this.tasaFianza);
 
     const cargosSeleccionados = this.seguro + this.administracion;
-    this.descuento = this.plazo <= 10 ? cargosSeleccionados * 0.5 : 0;
+    this.descuento = this.plazo <= 10 ? Math.round(cargosSeleccionados * 0.5) : 0;
 
-    this.totalCargos =
-      this.interes + this.seguro + this.administracion + this.fianza + this.iva;
+    this.totalPagar = this.monto + this.interes + this.seguro + this.fianza + this.administracion + this.iva - this.descuento;
+  }
 
-    this.totalPagar = this.monto + this.totalCargos - this.descuento;
+  ngOnInit() {
+    this.calcularPrestamo();
   }
 }

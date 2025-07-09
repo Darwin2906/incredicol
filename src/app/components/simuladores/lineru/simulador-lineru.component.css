@@ -23,7 +23,6 @@
   }
 }
 
-
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -35,9 +34,9 @@
 }
 
 input[type="range"] {
-  width: 50%;
+  width: 100%;
   margin-bottom: 0.5rem;
-    accent-color: #2c6de9;
+  accent-color: #2c6de9;
 }
 
 .resultados table {
@@ -51,13 +50,6 @@ input[type="range"] {
   padding: 0.75rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
-}
-
-.resultados tr.subtitulo td {
-  font-weight: bold;
-  background-color: #f0f0f0;
-  border-top: 2px solid #ccc;
-  border-bottom: 2px solid #ccc;
 }
 
 .resultados tr.total {
@@ -75,23 +67,12 @@ input[type="range"] {
   font-weight: bold;
 }
 
-
-.acciones {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
 .btn-externo {
   background: #2ecc71;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
   text-decoration: none;
-}
-
-@media (max-width: 768px) {
-  .parametros {
-    grid-template-columns: 1fr;
-  }
+  display: inline-block;
+  margin-top: 1rem;
 }

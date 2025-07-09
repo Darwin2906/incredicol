@@ -18,16 +18,9 @@
 
     <div class="form-group">
       <label for="plazo">Plazo (días):</label>
-      <input
-        type="range"
-        id="plazo"
-        [(ngModel)]="plazo"
-        min="5"
-        max="30"
-        step="1"
-        (input)="calcularPrestamo()"
-      />
-      <div>{{ plazo }} días</div>
+      <select id="plazo" [(ngModel)]="plazo" (change)="calcularPrestamo()">
+        <option *ngFor="let dia of opcionesPlazo" [value]="dia">{{ dia }} días</option>
+      </select>
     </div>
   </div>
 

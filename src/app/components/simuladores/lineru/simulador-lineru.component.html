@@ -20,8 +20,8 @@
       <input
         type="range"
         [(ngModel)]="plazo"
-        min="3"
-        max="180"
+        min="4"
+        max="30"
         step="1"
         (input)="calcularPrestamo()"
       />
@@ -29,7 +29,6 @@
     </div>
   </div>
 
-  <!-- Alerta de descuento -->
   <div *ngIf="descuento > 0" class="alerta-descuento">
     🎁 Si pagas en los primeros 10 días tendrás el 50% de descuento en cargos seleccionados
   </div>
@@ -40,11 +39,11 @@
         <th colspan="2">Resumen del crédito</th>
       </tr>
       <tr>
-        <td>Monto solicitado</td>
+        <td>Valor solicitado</td>
         <td>{{ monto | currency : "COP" }}</td>
       </tr>
       <tr>
-        <td>Interés (30% EA fija)</td>
+        <td>Interés (24.58% E.A)</td>
         <td>{{ interes | currency : "COP" }}</td>
       </tr>
       <tr>
@@ -52,12 +51,12 @@
         <td>{{ seguro | currency : "COP" }}</td>
       </tr>
       <tr>
-        <td>Administración</td>
-        <td>{{ administracion | currency : "COP" }}</td>
-      </tr>
-      <tr>
         <td>Fianza FGA + IVA</td>
         <td>{{ fianza | currency : "COP" }}</td>
+      </tr>
+      <tr>
+        <td>Administración</td>
+        <td>{{ administracion | currency : "COP" }}</td>
       </tr>
       <tr>
         <td>IVA</td>

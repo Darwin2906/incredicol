@@ -12,64 +12,59 @@ import { FormsModule } from '@angular/forms';
 })
 export class SolventaComponent implements OnInit {
   monto: number = 750000;
-  cuotas: number = 6;
-
-  fechaPago: string = '';
-  diasRestantes: number = 0;
-
-  fechaActual: string = '';
-  fechaAlternativa: string = '';
-
-  diasActuales: number = 0;
-  diasAlternativos: number = 0;
-
-  fechaActualTexto: string = '';
-  fechaAlternativaTexto: string = '';
+  cuotas: 1 | 3 | 6 = 1;
+  plazoDias: 23 | 39 = 23;
 
   pagoAlto: number = 0;
   pagoBajo: number = 0;
+  puntajeAnimado: number = 100;
 
-  puntajeAnimado: number = 80;
+  fecha23Texto: string = '';
+  fecha39Texto: string = '';
 
   constructor(private route: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const hoy = new Date();
-    const alternativa = new Date(hoy);
-    alternativa.setDate(hoy.getDate() + 30);
 
-    this.fechaActual = this.formatFecha(hoy);
-    this.fechaAlternativa = this.formatFecha(alternativa);
+    const fecha23 = new Date(hoy);
+    fecha23.setDate(hoy.getDate() + 23);
+    this.fecha23Texto = this.formatearFecha(fecha23);
 
-    this.fechaPago = this.fechaAlternativa;
-    this.diasRestantes = this.calcularDias(this.fechaPago);
+    const fecha39 = new Date(hoy);
+    fecha39.setDate(hoy.getDate() + 39);
+    this.fecha39Texto = this.formatearFecha(fecha39);
 
-    this.diasActuales = this.calcularDias(this.fechaActual);
-    this.diasAlternativos = this.calcularDias(this.fechaAlternativa);
-
-    this.fechaActualTexto = this.formatTexto(hoy);
-    this.fechaAlternativaTexto = this.formatTexto(alternativa);
-
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.monto = +params['monto'] || this.monto;
-      this.cuotas = +params['plazo'] || this.cuotas;
+      this.cuotas = (+params['plazo'] as 1 | 3 | 6) || this.cuotas;
       this.actualizarSimulacion();
     });
 
     this.actualizarSimulacion();
   }
 
-  seleccionarFecha(fecha: string, dias: number) {
-    this.fechaPago = fecha;
-    this.diasRestantes = dias;
+  formatearFecha(fecha: Date): string {
+    const opciones: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    };
+    return fecha.toLocaleDateString('es-CO', opciones);
   }
 
-  setCuotas(cuotas: number) {
-    this.cuotas = cuotas;
+  seleccionarFecha(plazo: 23 | 39): void {
+    this.plazoDias = plazo;
     this.actualizarSimulacion();
   }
 
-  actualizarSimulacion() {
+  setCuotas(c: 1 | 3 | 6): void {
+    this.cuotas = c;
+    this.actualizarSimulacion();
+  }
+
+  actualizarSimulacion(): void {
     this.puntajeAnimado = this.calcularPuntaje();
     this.calcularPagos();
   }
@@ -87,42 +82,41 @@ export class SolventaComponent implements OnInit {
     return Math.max(0, Math.min(100, puntaje));
   }
 
-  calcularPagos() {
-    // Tasas aproximadas basadas en los datos reales
-    let tasaBase = 0.22; // base mensual
-    if (this.cuotas === 1) tasaBase = 0.28;
-    if (this.cuotas === 3) tasaBase = 0.32;
-    if (this.cuotas === 6) tasaBase = 0.35;
-
-    // Pago Alto (peor crédito)
-    const totalAlto = this.monto * (1 + tasaBase * this.cuotas);
-    this.pagoAlto = totalAlto / this.cuotas;
-
-    // Pago Bajo (mejor crédito)
-    const tasaMejorCredito = tasaBase * 0.93;
-    const totalBajo = this.monto * (1 + tasaMejorCredito * this.cuotas);
-    this.pagoBajo = totalBajo / this.cuotas;
+  calcularTasaAlto(monto: number, cuotas: number): number {
+    if (cuotas === 1) {
+      if (monto <= 500000) return 0.3243;
+      if (monto <= 1000000) return 0.2347;
+      if (monto <= 2000000) return 0.1899;
+      return 0.15;
+    }
+    if (cuotas === 3) return 0.1381;
+    if (cuotas === 6) return 0.0555;
+    return 0.2;
   }
 
-  formatFecha(fecha: Date): string {
-    return fecha.toISOString().split('T')[0];
+  calcularTasaBajo(monto: number, cuotas: number): number {
+    if (cuotas === 1) {
+      if (monto <= 500000) return 0.2350;
+      if (monto <= 1000000) return 0.1455;
+      if (monto <= 2000000) return 0.1007;
+      return 0.09;
+    }
+    if (cuotas === 3) return 0.1251;
+    if (cuotas === 6) return 0.0454;
+    return 0.1;
   }
 
-  formatTexto(fecha: Date): string {
-    const opciones: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    };
-    return fecha.toLocaleDateString('es-CO', opciones);
-  }
+  calcularPagos(): void {
+    const tasaAlto = this.calcularTasaAlto(this.monto, this.cuotas);
+    const tasaBajo = this.calcularTasaBajo(this.monto, this.cuotas);
 
-  calcularDias(fechaStr: string): number {
-    const hoy = new Date();
-    const fecha = new Date(fechaStr);
-    const diferencia = fecha.getTime() - hoy.getTime();
-    return Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+    const totalAlto = this.monto * (1 + tasaAlto * this.cuotas);
+    const totalBajo = this.monto * (1 + tasaBajo * this.cuotas);
+
+    const factorPlazo = this.plazoDias === 39 ? 1.018 : 1;
+
+    this.pagoAlto = Math.round((totalAlto * factorPlazo) / this.cuotas);
+    this.pagoBajo = Math.round((totalBajo * factorPlazo) / this.cuotas);
   }
 
   getPuntajeX(puntaje: number): number {
