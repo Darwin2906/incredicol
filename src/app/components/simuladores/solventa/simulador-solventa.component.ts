@@ -13,27 +13,27 @@ import { FormsModule } from '@angular/forms';
 export class SolventaComponent implements OnInit {
   monto: number = 750000;
   cuotas: 1 | 3 | 6 = 1;
-  plazoDias: 23 | 39 = 23;
+  plazoDias: 22 | 38 = 22;
 
   pagoAlto: number = 0;
   pagoBajo: number = 0;
   puntajeAnimado: number = 100;
 
-  fecha23Texto: string = '';
-  fecha39Texto: string = '';
+  fecha22Texto: string = '';
+  fecha38Texto: string = '';
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const hoy = new Date();
 
-    const fecha23 = new Date(hoy);
-    fecha23.setDate(hoy.getDate() + 23);
-    this.fecha23Texto = this.formatearFecha(fecha23);
+    const fecha22 = new Date(hoy);
+    fecha22.setDate(hoy.getDate() + 22);
+    this.fecha22Texto = this.formatearFecha(fecha22);
 
-    const fecha39 = new Date(hoy);
-    fecha39.setDate(hoy.getDate() + 39);
-    this.fecha39Texto = this.formatearFecha(fecha39);
+    const fecha38 = new Date(hoy);
+    fecha38.setDate(hoy.getDate() + 38);
+    this.fecha38Texto = this.formatearFecha(fecha38);
 
     this.route.queryParams.subscribe((params) => {
       this.monto = +params['monto'] || this.monto;
@@ -54,7 +54,7 @@ export class SolventaComponent implements OnInit {
     return fecha.toLocaleDateString('es-CO', opciones);
   }
 
-  seleccionarFecha(plazo: 23 | 39): void {
+  seleccionarFecha(plazo: 22 | 38): void {
     this.plazoDias = plazo;
     this.actualizarSimulacion();
   }
@@ -71,7 +71,6 @@ export class SolventaComponent implements OnInit {
 
   calcularPuntaje(): number {
     let puntaje = 100;
-
     if (this.monto <= 500000) puntaje -= 15;
     else if (this.monto <= 1000000) puntaje -= 10;
     else if (this.monto >= 3000000) puntaje -= 20;
@@ -82,41 +81,22 @@ export class SolventaComponent implements OnInit {
     return Math.max(0, Math.min(100, puntaje));
   }
 
-  calcularTasaAlto(monto: number, cuotas: number): number {
-    if (cuotas === 1) {
-      if (monto <= 500000) return 0.3243;
-      if (monto <= 1000000) return 0.2347;
-      if (monto <= 2000000) return 0.1899;
-      return 0.15;
-    }
-    if (cuotas === 3) return 0.1381;
-    if (cuotas === 6) return 0.0555;
-    return 0.2;
-  }
-
-  calcularTasaBajo(monto: number, cuotas: number): number {
-    if (cuotas === 1) {
-      if (monto <= 500000) return 0.2350;
-      if (monto <= 1000000) return 0.1455;
-      if (monto <= 2000000) return 0.1007;
-      return 0.09;
-    }
-    if (cuotas === 3) return 0.1251;
-    if (cuotas === 6) return 0.0454;
-    return 0.1;
-  }
-
   calcularPagos(): void {
-    const tasaAlto = this.calcularTasaAlto(this.monto, this.cuotas);
-    const tasaBajo = this.calcularTasaBajo(this.monto, this.cuotas);
+    const pagoAlto = this.calcularCuota(this.monto, this.cuotas, this.plazoDias, 'alto');
+    const pagoBajo = this.calcularCuota(this.monto, this.cuotas, this.plazoDias, 'bajo');
 
-    const totalAlto = this.monto * (1 + tasaAlto * this.cuotas);
-    const totalBajo = this.monto * (1 + tasaBajo * this.cuotas);
+    this.pagoAlto = Math.round(pagoAlto * this.cuotas);
+    this.pagoBajo = Math.round(pagoBajo * this.cuotas);
+  }
 
-    const factorPlazo = this.plazoDias === 39 ? 1.018 : 1;
+  calcularCuota(monto: number, cuotas: number, dias: number, tipo: 'alto' | 'bajo'): number {
+    const tasaEfectivaAnual = tipo === 'alto' ? 0.73 : 0.61; // TEA real del Excel Solventa
+    const tasaDiaria = Math.pow(1 + tasaEfectivaAnual, 1 / 365) - 1;
 
-    this.pagoAlto = Math.round((totalAlto * factorPlazo) / this.cuotas);
-    this.pagoBajo = Math.round((totalBajo * factorPlazo) / this.cuotas);
+    const montoFinal = monto * Math.pow(1 + tasaDiaria, dias);
+    const cuota = montoFinal / cuotas;
+
+    return Math.round(cuota);
   }
 
   getPuntajeX(puntaje: number): number {
