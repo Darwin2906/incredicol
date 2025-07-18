@@ -21,9 +21,9 @@ export class LineruComponent {
 
   interes: number = 0;
   seguro: number = 0;
-  fianza: number = 0; // incluye IVA
+  fianza: number = 0;
   administracion: number = 34900;
-  iva: number = 0; // solo IVA sobre administración
+  iva: number = 0;
   descuento: number = 0;
   totalPagar: number = 0;
 
@@ -36,36 +36,26 @@ export class LineruComponent {
   }
 
   calcularPrestamo() {
-    // Interés compuesto diario sobre el monto solicitado
     const tasaDiaria = Math.pow(1 + this.tasaEA, 1 / 365) - 1;
     this.interes = Math.round(this.monto * tasaDiaria * this.plazo);
 
-    // Seguro fijo calculado sobre el monto
     this.seguro = Math.round(this.monto * this.tasaSeguro);
 
-    // Fianza calculada con tasa ajustada que ya incluye IVA (13.09%)
-    this.fianza = Math.round(this.monto * 0.1309); // valor más exacto en este caso
+    this.fianza = Math.round(this.monto * 0.1309); // ya con IVA
 
+    // IVA sobre el 50% de administración si plazo <= 10, si no se cobra 100%
+    const baseGravableIVA = this.plazo > 10 ? this.administracion : this.administracion * 0.5;
+    this.iva = Math.round(baseGravableIVA * this.tasaIVA);
 
+    // Calcular descuento si plazo <= 10 días
+    if (this.plazo <= 10) {
+      const cargosDescontables = this.interes + this.seguro + this.fianza + this.administracion;
+      this.descuento = Math.round(cargosDescontables * 0.5); // 50% de esos cargos
+    } else {
+      this.descuento = 0;
+    }
 
-    // Solo el 50% de la administración tiene IVA (basado en simulador real)
-const baseGravable = this.administracion * 0.5;
-this.iva = Math.round(baseGravable * this.tasaIVA);
-
-
-    // Descuento del 50% si el plazo es de 10 días o menos
-// Aplica sobre: fianza (con IVA) + administración + IVA sobre administración
-// Si el plazo es mayor a 10, cobrar 100% del IVA
-if (this.plazo > 10) {
-  this.iva = Math.round(this.administracion * this.tasaIVA);
-} else {
-  const baseGravable = this.administracion * 0.5;
-  this.iva = Math.round(baseGravable * this.tasaIVA);
-}
-
-
-
-    // Total a pagar
+    // Total a pagar con descuento aplicado
     this.totalPagar = Math.round(
       this.monto +
       this.interes +
