@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // ← IMPORTANTE
+import { Router } from '@angular/router';
 import { Plataforma } from '../../models/plataforma.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,56 +15,70 @@ export class ComparacionComponent implements OnInit {
   monto: number = 100000;
   plazo: number = 30;
 
-  constructor(private router: Router) {} // ← AÑADE ESTO
+  constructor(private router: Router) {}
 
   plataformas: Plataforma[] = [
-  {
-    id: 'rapicredit',
-    nombre: 'Rapicredit',
-    montoMin: 100000,
-    montoMax: 1000000,
-    plazoMin: 5,
-    plazoMax: 150,
-    tasaInteres: 0.02,
-    comision: 0.05,
-    tiempoDesembolso: '24 horas',
-    descuentos: '10% si es tu primer crédito',
-    destacado: true,
-    rutaSimulador: 'rapicredit',
-    faqUrl: 'https://www.rapicredit.com.co/faq'
-  },
-  {
-    id: 'lineru',
-    nombre: 'Linerú',
-    montoMin: 100000,
-    montoMax: 1000000,
-    plazoMin: 5,
-    plazoMax: 30,
-    tasaInteres: 0.023, // puedes ajustar si tienes una tasa real
-    comision: 0.03,
-    tiempoDesembolso: 'En minutos',
-    descuentos: 'Disponible según perfil',
-    destacado: false,
-    rutaSimulador: 'lineru',
-    faqUrl: 'https://www.lineru.com/preguntas-frecuentes'
-  },
-  {
-  id: 'solventa',
-  nombre: 'Solventa',
-  montoMin: 150000,
-  montoMax: 5000000,
-  plazoMin: 1,
-  plazoMax: 6,
-  tasaInteres: 0.28,
-  comision: 0.01,
-  tiempoDesembolso: '24 horas',
-  descuentos: 'Tarifas según puntaje crediticio',
-  destacado: true,
-  rutaSimulador: 'solventa',
-  faqUrl: 'https://solventa.co'
-}
-
-];
+    {
+      id: 'rapicredit',
+      nombre: 'Rapicredit',
+      montoMin: 100000,
+      montoMax: 1000000,
+      plazoMin: 5,
+      plazoMax: 150,
+      tasaInteres: 0.02,
+      comision: 0.05,
+      tiempoDesembolso: '24 horas',
+      descuentos: '10% si es tu primer crédito',
+      destacado: true,
+      rutaSimulador: 'rapicredit',
+      faqUrl: 'https://www.rapicredit.com.co/faq'
+    },
+    {
+      id: 'lineru',
+      nombre: 'Linerú',
+      montoMin: 100000,
+      montoMax: 1000000,
+      plazoMin: 5,
+      plazoMax: 30,
+      tasaInteres: 0.023,
+      comision: 0.03,
+      tiempoDesembolso: 'En minutos',
+      descuentos: 'Disponible según perfil',
+      destacado: false,
+      rutaSimulador: 'lineru',
+      faqUrl: 'https://www.lineru.com/preguntas-frecuentes'
+    },
+    {
+      id: 'solventa',
+      nombre: 'Solventa',
+      montoMin: 150000,
+      montoMax: 5000000,
+      plazoMin: 1,
+      plazoMax: 6,
+      tasaInteres: 0.28,
+      comision: 0.01,
+      tiempoDesembolso: '24 horas',
+      descuentos: 'Tarifas según puntaje crediticio',
+      destacado: true,
+      rutaSimulador: 'solventa',
+      faqUrl: 'https://solventa.co'
+    },
+    {
+      id: 'galilea',
+      nombre: 'Galilea',
+      montoMin: 200000,
+      montoMax: 1000000,
+      plazoMin: 10,
+      plazoMax: 25,
+      tasaInteresDiaria: 0.0012,
+      comisionFija: 25000,
+      tiempoDesembolso: 'En minutos',
+      descuentos: 'Descuentos para clientes recurrentes',
+      destacado: true,
+      rutaSimulador: 'galilea',
+      faqUrl: 'https://galilea.co/preguntas-frecuentes'
+    }
+  ];
 
   plataformasFiltradas: any[] = [];
 
@@ -73,28 +87,32 @@ export class ComparacionComponent implements OnInit {
   }
 
   calcularOpciones() {
-    this.plataformasFiltradas = this.plataformas
-      .filter(p =>
-        this.monto >= p.montoMin &&
-        this.monto <= p.montoMax &&
-        this.plazo >= p.plazoMin &&
-        this.plazo <= p.plazoMax
-      )
-      .map(p => {
-        const interes = this.monto * p.tasaInteres * (this.plazo / 30);
-        const comision = this.monto * p.comision;
-        const pagoTotal = this.monto + interes + comision;
+  this.plataformasFiltradas = this.plataformas
+    .filter(p =>
+      this.monto >= p.montoMin &&
+      this.monto <= p.montoMax &&
+      this.plazo >= p.plazoMin &&
+      this.plazo <= p.plazoMax &&
+      (p.id !== 'galilea' || this.plazo <= 25) // Mostrar Galilea si el plazo es 25 o menor
+    )
+    .map(p => {
+      const tasaDiaria = p.tasaInteresDiaria ?? 0;
+      const interes = this.monto * tasaDiaria * this.plazo;
 
-        return {
-          ...p,
-          pagoTotal: Math.round(pagoTotal),
-          interes: Math.round(interes),
-          comision: Math.round(comision),
-          costoDiario: Math.round(pagoTotal / this.plazo),
-          plazos: [this.plazo]
-        };
-      });
-  }
+      const comision = p.comisionFija ?? (this.monto * (p.comision ?? 0));
+      const pagoTotal = this.monto + interes + comision;
+
+      return {
+        ...p,
+        pagoTotal: Math.round(pagoTotal),
+        interes: Math.round(interes),
+        comision: Math.round(comision),
+        costoDiario: Math.round(pagoTotal / this.plazo),
+        plazos: [this.plazo]
+      };
+    });
+}
+
 
   irASimulador(id: string) {
     this.router.navigate([`/simulador-${id}`], {

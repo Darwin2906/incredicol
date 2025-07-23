@@ -76,3 +76,13 @@ input[type="range"] {
   display: inline-block;
   margin-top: 1rem;
 }
+
+.alerta-limite {
+  background: #fff3cd;
+  border: 1px solid #ffecb5;
+  color: #856404;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}

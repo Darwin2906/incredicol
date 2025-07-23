@@ -1,0 +1,89 @@
+<div class="simulador-container">
+  <h2>Calcula tu crédito</h2>
+  <p class="text-limite-verde">Tu primera vez hasta $500.000</p>
+
+  <!-- MONTO -->
+  <label for="monto">Elige el monto</label>
+  <div class="slider-container">
+    <span class="monto-elegido">
+      {{ monto | currency : "COP" : "symbol" : "1.0-0" }}
+    </span>
+    <input
+      type="range"
+      id="monto"
+      min="200000"
+      max="1500000"
+      step="10000"
+      [(ngModel)]="monto"
+      (input)="calcularTodo()"
+    />
+  </div>
+
+  <!-- FECHAS -->
+  <p class="subtitulo-fecha">Elige la fecha de pago</p>
+  <div class="fecha-opciones">
+    <div class="fecha-box" (click)="seleccionarFecha(23)">
+      <button class="fecha-btn" [class.selected]="diasVencimiento === 23">
+        {{ obtenerFechaConDias(23) }}
+        <span *ngIf="diasVencimiento === 23" class="check-icon">✔</span>
+      </button>
+      <span class="vence-texto left">Vence en 23 días</span>
+    </div>
+
+    <div class="fecha-box" (click)="seleccionarFecha(38)">
+      <button class="fecha-btn" [class.selected]="diasVencimiento === 38">
+        {{ obtenerFechaConDias(38) }}
+        <span *ngIf="diasVencimiento === 38" class="check-icon">✔</span>
+      </button>
+      <span class="vence-texto left">Vence en 38 días</span>
+    </div>
+  </div>
+
+  <!-- COSTOS FIJOS -->
+  <div class="costos">
+    <h4>Costos fijos</h4>
+    <div class="detalle">
+      <span>Monto solicitado</span>
+      <span>{{ monto | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+    <div class="detalle">
+      <span
+        >Interés corriente ({{ tasaEA * 100 | number : "1.2-2" }}% E.A)</span
+      >
+      <span>{{ interes | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+  </div>
+
+  <!-- COSTOS OPCIONALES -->
+  <div class="costos">
+    <h4>Costo opcional</h4>
+    <div class="detalle">
+      <label class="checkbox-label">
+        <input
+          type="checkbox"
+          [(ngModel)]="firmaElectronica"
+          (change)="calcularTodo()"
+        />
+        Firma electrónica (con descuento)
+      </label>
+      <span>{{ costoFirma | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total">
+    <div class="detalle">
+      <strong>Total a pagar</strong>
+      <strong>{{ totalPagar | currency : "COP" : "symbol" : "1.0-0" }}</strong>
+    </div>
+    <div class="detalle">
+      <span>Fecha de tu primera cuota</span>
+      <span>{{ fechaPrimeraCuota | date : "dd/MM/yyyy" }}</span>
+    </div>
+  </div>
+
+  <a class="btn-solicitar" href="https://galilea.co" target="_blank" rel="noopener noreferrer">
+  Solicitar crédito
+  </a>
+
+</div>

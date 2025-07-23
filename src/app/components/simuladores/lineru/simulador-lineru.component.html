@@ -13,6 +13,11 @@
         (input)="calcularPrestamo()"
       />
       <div>{{ monto | currency : "COP" }}</div>
+
+      <!-- Advertencia si supera los $700.000 -->
+      <div *ngIf="monto > 700000" class="alerta-limite">
+        ⚠️ Si es tu primera vez, sólo puedes pedir $700.000
+      </div>
     </div>
 
     <div class="form-group">
