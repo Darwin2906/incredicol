@@ -14,9 +14,8 @@ export class LineruComponent {
   monto: number = 300000;
   plazo: number = 30;
 
-  tasaEA: number = 0.2458; // 24.58% EA
+  tasaDiaria: number = 0.0006; // 0.06% diaria como en Excel
   tasaSeguro: number = 0.00449;
-  tasaFianza: number = 0.1309; // ya incluye IVA
   tasaIVA: number = 0.19;
 
   interes: number = 0;
@@ -36,27 +35,33 @@ export class LineruComponent {
   }
 
   calcularPrestamo() {
-    // Interés compuesto diario
-    const tasaDiaria = Math.pow(1 + this.tasaEA, 1 / 365) - 1;
-    this.interes = Math.round(this.monto * (Math.pow(1 + tasaDiaria, this.plazo) - 1));
+    // Interés simple con tasa diaria fija (como Excel)
+    this.interes = Math.round(this.monto * this.tasaDiaria * this.plazo);
 
-    // Seguro y Fianza
+    // Seguro proporcional al monto
     this.seguro = Math.round(this.monto * this.tasaSeguro);
-    this.fianza = Math.round(this.monto * this.tasaFianza); // ya con IVA
 
-    // IVA sobre seguro + fianza + administración
-    const baseGravable = this.seguro + this.fianza + this.administracion;
-    this.iva = Math.round(baseGravable * this.tasaIVA);
+    // Fianza según monto (fórmula escalonada si es necesario)
+    if (this.monto <= 200000) {
+      this.fianza = 30345;
+    } else if (this.monto <= 210000) {
+      this.fianza = 34986;
+    } else {
+      this.fianza = Math.round(this.monto * 0.148); // Puedes ajustar este % si hay más rangos
+    }
 
-    // Descuento si paga en 10 días o menos (no incluye interés)
+    // IVA sobre administración
+    this.iva = Math.round(this.administracion * this.tasaIVA);
+
+    // Descuento si paga en 10 días o menos (solo cargos)
+    const cargos = this.seguro + this.fianza + this.administracion;
     if (this.plazo <= 10) {
-      const cargosConDescuento = this.seguro + this.fianza + this.administracion;
-      this.descuento = Math.round(cargosConDescuento * 0.5);
+      this.descuento = Math.round(cargos * 0.5);
     } else {
       this.descuento = 0;
     }
 
-    // Total a pagar
+    // Total a pagar (sin aplicar descuento al interés ni monto)
     this.totalPagar = Math.round(
       this.monto +
       this.interes +
