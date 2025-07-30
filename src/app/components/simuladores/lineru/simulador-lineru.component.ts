@@ -58,7 +58,7 @@ export class LineruComponent {
 
     // Descuento si paga en 10 días o menos (no aplica al interés)
     if (this.plazo <= 10) {
-      const cargosConDescuento = this.seguro + this.fianza + this.administracion + this.interes;
+      const cargosConDescuento = this.seguro + this.fianza + this.administracion + this.interes + this.iva;
       this.descuento = Math.round(cargosConDescuento * 0.5);
     } else {
       this.descuento = 0;
