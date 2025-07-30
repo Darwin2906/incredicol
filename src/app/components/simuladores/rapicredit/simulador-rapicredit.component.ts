@@ -15,7 +15,7 @@ export class RapicreditComponent implements OnInit {
 
   // Tasas reales del simulador Rapicredit (según el Excel)
   tasaDiaria: number = 0.000567;  // Interés corriente diario (23% EA)
-  valorBaseFirma: number = 130500;
+  valorBaseFirma: number = 136530;
 
   interes: number = 0;
   aval: number = 0;
