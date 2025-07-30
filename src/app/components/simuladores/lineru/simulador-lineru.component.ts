@@ -28,7 +28,13 @@ export class LineruComponent {
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      this.monto = +params['monto'] || this.monto;
+      if (params['monto']) {
+  const nuevoMonto = +params['monto'];
+  if (nuevoMonto >= 150000 && nuevoMonto <= 1200000) {
+    this.monto = nuevoMonto;
+  }
+}
+
       this.plazo = +params['plazo'] || this.plazo;
       this.calcularPrestamo();
     });
@@ -52,7 +58,7 @@ export class LineruComponent {
 
     // Descuento si paga en 10 días o menos (no aplica al interés)
     if (this.plazo <= 10) {
-      const cargosConDescuento = this.seguro + this.fianza + this.administracion;
+      const cargosConDescuento = this.seguro + this.fianza + this.administracion + this.interes;
       this.descuento = Math.round(cargosConDescuento * 0.5);
     } else {
       this.descuento = 0;
