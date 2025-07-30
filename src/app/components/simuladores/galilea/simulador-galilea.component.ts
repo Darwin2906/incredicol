@@ -40,7 +40,7 @@ export class SimuladorGalileaComponent {
   obtenerFechaPorDefecto(): string {
     const hoy = new Date();
     hoy.setDate(hoy.getDate() + this.diasVencimiento);
-    return hoy.toISOString().substring(0, 10);
+    return hoy.toISOString().substring(0, 1);
   }
 
   calcularVencimiento(): void {
@@ -58,7 +58,7 @@ export class SimuladorGalileaComponent {
     this.diasVencimiento = dias;
     const nuevaFecha = new Date();
     nuevaFecha.setDate(nuevaFecha.getDate() + dias);
-    this.fechaPago = nuevaFecha.toISOString().substring(0, 10);
+    this.fechaPago = nuevaFecha.toISOString().substring(0, 1);
     this.fechaPrimeraCuota = new Date(nuevaFecha);
     this.calcularTodo();
   }
