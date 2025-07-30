@@ -1,100 +1,69 @@
 <div class="simulador-container">
-  <h2>Simulador Solventa</h2>
-
-  <div class="form-group">
-    <label for="monto">¿Cuánto necesitas?</label>
-    <input
-      type="range"
-      id="monto"
-      [(ngModel)]="monto"
-      min="500000"
-      max="5000000"
-      step="50000"
-      (input)="actualizarSimulacion()"
-    />
-    <div class="monto-valor">{{ monto | currency: 'COP' }}</div>
-  </div>
-
-  <div class="form-group">
-    <label>¿Cuántas cuotas?</label>
-    <div class="cuotas-selector">
-      <button
-        [class.selected]="cuotas === 1"
-        (click)="setCuotas(1)"
-      >
-        1
-      </button>
-      <button
-        [class.selected]="cuotas === 3"
-        (click)="setCuotas(3)"
-      >
-        3
-      </button>
-      <button
-        [class.selected]="cuotas === 6"
-        (click)="setCuotas(6)"
-      >
-        6
-      </button>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label>¿Cuándo prefieres pagar?</label>
-    <div class="fecha-opciones-horizontal">
-      <div
-        class="tarjeta-fecha"
-        [class.seleccionada]="plazoDias === 22"
-        (click)="seleccionarFecha(22)"
-      >
-        En 22 días
-        <small>{{ fecha22Texto }}</small>
+  <form [formGroup]="loanForm" class="loan-form">
+    <h1 class="section-title">Simulador Solventa</h1>
+    <h1 class="section-title">¿Cuánto dinero quieres recibir?</h1>
+    
+    <div class="amount-section">
+      <div class="amount-display">
+        {{ formatCurrency(loanForm.value.amount) }}
       </div>
-      <div
-        class="tarjeta-fecha"
-        [class.seleccionada]="plazoDias === 38"
-        (click)="seleccionarFecha(38)"
-      >
-        En 38 días
-        <small>{{ fecha38Texto }}</small>
+      
+      <input type="range" formControlName="amount" [min]="minAmount" [max]="maxAmount" [step]="stepAmount" 
+             class="amount-slider">
+      
+      <div class="amount-limits">
+        <span>{{ formatCurrency(minAmount) }}</span>
+        <span>{{ formatCurrency(maxAmount) }}</span>
       </div>
     </div>
-  </div>
-
-  <div class="resultados">
-    <div class="pago-rango">
-      <div>Bajo: {{ pagoBajo | currency: 'COP' }}</div>
-      <div>Alto: {{ pagoAlto | currency: 'COP' }}</div>
-    </div>
-
-    <div class="credit-score-meter">
-      <svg width="220" height="120">
-        <path
-          d="M20,100 A90,90 0 0,1 200,100"
-          fill="none"
-          stroke="#ccc"
-          stroke-width="20"
-        />
-        <circle
-          [attr.cx]="getPuntajeX(puntajeAnimado)"
-          [attr.cy]="getPuntajeY(puntajeAnimado)"
-          r="10"
-          fill="#13bf3f"
-        />
-      </svg>
-      <div class="credit-score-labels">
-        <span>0</span>
-        <span>50</span>
-        <span>100</span>
+    
+    <h2 class="section-title">¿En cuántas cuotas?</h2>
+    <div class="installments-section">
+      <div *ngFor="let inst of installments" class="installment-option">
+        <input type="radio" [id]="'inst'+inst" formControlName="installments" [value]="inst">
+        <label [for]="'inst'+inst">{{ inst }} {{inst === 1 ? 'cuota' : 'cuotas'}}</label>
       </div>
     </div>
-
-    <a
-      href="https://www.solventa.co/"
-      target="_blank"
-      class="btn-externo"
-    >
-      Continuar en Solventa
-    </a>
+    
+    <h2 class="section-title">¿Cuándo prefieres pagarlo?</h2>
+    <div class="date-options">
+      <div *ngFor="let option of paymentDateOptions" 
+           [class.selected]="selectedDateId === option.id"
+           (click)="selectDateOption(option.id)"
+           class="date-option">
+        <div class="day-name">{{ option.dayName }}</div>
+        <div class="date-value">{{ option.formattedDate }}</div>
+        <div class="days-until">Vence en {{ option.daysUntil }} días</div>
+      </div>
+    </div>
+    
+    <div class="results-section">
+      <h3 class="results-title">Según tu puntaje crediticio pagarás:</h3>
+      <div class="cost-results">
+        <div class="cost-result low-cost">
+          <div class="cost-amount">{{ formatCurrency(lowCreditCost) }}</div>
+          <div class="cost-label">
+            {{ showTotal ? 'Total a pagar' : 'Por cuota' }}
+          </div>
+        </div>
+        <div class="cost-result high-cost">
+          <div class="cost-amount">{{ formatCurrency(highCreditCost) }}</div>
+          <div class="cost-label">
+            {{ showTotal ? 'Total a pagar' : 'Por cuota' }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="credit-types">
+        <span>Bajo</span>
+        <span>Alto</span>
+      </div>
+    </div>
+    
+    <button type="button" (click)="submitLoan()" class="submit-button">SOLICITAR YA</button>
+  </form>
+  
+  <div class="footer-note">
+    Préstamos de dinero en línea desde {{ formatCurrency(150000) }} y hasta {{ formatCurrency(5000000) }} a 6 cuotas.
   </div>
 </div>

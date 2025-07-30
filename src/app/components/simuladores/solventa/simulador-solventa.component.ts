@@ -1,109 +1,218 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-solventa',
+  selector: 'app-simulador-solventa',
   standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    CommonModule
+  ],
   templateUrl: './simulador-solventa.component.html',
-  styleUrls: ['./simulador-solventa.component.css'],
-  imports: [CommonModule, FormsModule],
+  styleUrls: ['./simulador-solventa.component.scss'],
+  providers: [CurrencyPipe, DatePipe]
 })
-export class SolventaComponent implements OnInit {
-  monto: number = 750000;
-  cuotas: 1 | 3 | 6 = 1;
-  plazoDias: 22 | 38 = 22;
+export class SimuladorSolventaComponent implements OnInit {
+  loanForm: FormGroup;
+  minAmount = 150000;
+  maxAmount = 5000000;
+  stepAmount = 50000;
+  installments = [1, 3, 6];
+  paymentDateOptions: any[] = [];
+  lowCreditCost = 0;
+  highCreditCost = 0;
+  lowTotalCost = 0;
+  highTotalCost = 0;
+  today = new Date();
+  selectedDateId: string = 'option1';
+  showTotal = true;
+  daysUntil = 0;
+  firmaElectronica = 89579;
+  tasasEA = {
+    'option1': 0.2555, // 25.55% 
+    'option2': 0.2478  // 24.78% 
+  };
+  tasasDiarias: { [key: string]: number } = {};
 
-  pagoAlto: number = 0;
-  pagoBajo: number = 0;
-  puntajeAnimado: number = 100;
+  // Datos exactos de las tablas
+  baseRates: any = {
+    'option1': {
+      1: { bajo: 260884, alto: 247497 },
+      3: { bajo: 88894, alto: 84431 },
+      6: { bajo: 45940, alto: 43709 }
+    },
+    'option2': {
+      1: { bajo: 262195, alto: 248808 },
+      3: { bajo: 89315, alto: 84853 },
+      6: { bajo: 46163, alto: 43932 }
+    }
+  };
 
-  fecha22Texto: string = '';
-  fecha38Texto: string = '';
+  increments: any = {
+    'option1': {
+      1: { bajo: 57101, alto: 52638 },
+      3: { bajo: 19678, alto: 18191 },
+      6: { bajo: 10337, alto: 9593 }
+    },
+    'option2': {
+      1: { bajo: 57539, alto: 53076 },
+      3: { bajo: 19818, alto: 18330 },
+      6: { bajo: 10411, alto: 9667 }
+    }
+  };
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    const hoy = new Date();
-
-    const fecha22 = new Date(hoy);
-    fecha22.setDate(hoy.getDate() + 22);
-    this.fecha22Texto = this.formatearFecha(fecha22);
-
-    const fecha38 = new Date(hoy);
-    fecha38.setDate(hoy.getDate() + 38);
-    this.fecha38Texto = this.formatearFecha(fecha38);
-
-    this.route.queryParams.subscribe((params) => {
-      this.monto = +params['monto'] || this.monto;
-      this.cuotas = (+params['plazo'] as 1 | 3 | 6) || this.cuotas;
-      this.actualizarSimulacion();
+  constructor(
+    private fb: FormBuilder,
+    private currencyPipe: CurrencyPipe,
+    private datePipe: DatePipe
+  ) {
+    this.loanForm = this.fb.group({
+      amount: [500000, [
+        Validators.required,
+        Validators.min(this.minAmount),
+        Validators.max(this.maxAmount)
+      ]],
+      installments: [1, Validators.required]
     });
 
-    this.actualizarSimulacion();
+    this.calculateDailyRates();
   }
 
-  formatearFecha(fecha: Date): string {
-    const opciones: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
+  ngOnInit(): void {
+    this.calculatePaymentDateOptions();
+    this.calculateCosts();
+    
+    this.loanForm.valueChanges.subscribe(() => {
+      this.calculateCosts();
+    });
+  }
+
+  private calculateDailyRates() {
+    this.tasasDiarias['option1'] = Math.pow(1 + this.tasasEA['option1'], 1/365) - 1;
+    this.tasasDiarias['option2'] = Math.pow(1 + this.tasasEA['option2'], 1/365) - 1;
+  }
+
+  calculateCuota(monto: number, cuotas: number, tipo: 'bajo' | 'alto'): number {
+    const montoBase = 150000;
+    const paso = 50000;
+    const steps = Math.max(0, (monto - montoBase) / paso);
+    
+    const base = this.baseRates[this.selectedDateId][cuotas][tipo];
+    const increment = this.increments[this.selectedDateId][cuotas][tipo];
+    
+    return base + (increment * steps);
+  }
+
+  calculatePaymentDateOptions() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    this.paymentDateOptions = [];
+    
+    // Función para ajustar a día hábil
+    const adjustToBusinessDay = (date: Date) => {
+      // Si es sábado, mover a lunes (día + 2)
+      if (date.getDay() === 6) {
+        date.setDate(date.getDate() + 2);
+      }
+      // Si es domingo, mover a lunes (día + 1)
+      else if (date.getDay() === 0) {
+        date.setDate(date.getDate() + 1);
+      }
+      return date;
     };
-    return fecha.toLocaleDateString('es-CO', opciones);
+
+    // Función para calcular días hasta fecha
+    const daysUntilDate = (target: Date) => {
+      return Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    };
+
+    // Opción 1: 15 del mes
+    let nextMonth15 = new Date(today.getFullYear(), today.getMonth() + 1, 15);
+    nextMonth15 = adjustToBusinessDay(nextMonth15);
+    let daysUntil15 = daysUntilDate(nextMonth15);
+
+    // Si faltan menos de 10 días, mostrar 15 del siguiente mes
+    if (daysUntil15 < 10) {
+      nextMonth15 = new Date(today.getFullYear(), today.getMonth() + 2, 15);
+      nextMonth15 = adjustToBusinessDay(nextMonth15);
+      daysUntil15 = daysUntilDate(nextMonth15);
+    }
+
+    // Opción 2: Último día hábil del mes
+    const nextMonth = today.getMonth() + 1;
+    let lastDay = new Date(today.getFullYear(), nextMonth + 1, 0); // Último día del mes
+    
+    // Ajustar a día hábil (retroceder si es fin de semana)
+    while (lastDay.getDay() === 0 || lastDay.getDay() === 6) {
+      lastDay.setDate(lastDay.getDate() - 1);
+    }
+    
+    let daysUntilLast = daysUntilDate(lastDay);
+    
+    // Si faltan menos de 10 días, mostrar último día del siguiente mes
+    if (daysUntilLast < 10) {
+      const nextNextMonth = today.getMonth() + 2;
+      lastDay = new Date(today.getFullYear(), nextNextMonth + 1, 0);
+      while (lastDay.getDay() === 0 || lastDay.getDay() === 6) {
+        lastDay.setDate(lastDay.getDate() - 1);
+      }
+      daysUntilLast = daysUntilDate(lastDay);
+    }
+
+    this.paymentDateOptions = [
+      { 
+        id: 'option1', 
+        date: nextMonth15, 
+        daysUntil: daysUntil15,
+        dayName: this.getDayName(nextMonth15),
+        formattedDate: this.datePipe.transform(nextMonth15, 'dd/MM/yyyy')
+      },
+      { 
+        id: 'option2', 
+        date: lastDay, 
+        daysUntil: daysUntilLast,
+        dayName: this.getDayName(lastDay),
+        formattedDate: this.datePipe.transform(lastDay, 'dd/MM/yyyy')
+      }
+    ];
+
+    // Actualizar días hasta el pago para el cálculo
+    this.daysUntil = this.paymentDateOptions[0].daysUntil;
   }
 
-  seleccionarFecha(plazo: 22 | 38): void {
-    this.plazoDias = plazo;
-    this.actualizarSimulacion();
+  selectDateOption(id: string) {
+    this.selectedDateId = id;
+    const option = this.paymentDateOptions.find(opt => opt.id === id);
+    if (option) {
+      this.daysUntil = option.daysUntil;
+      this.calculateCosts();
+    }
   }
 
-  setCuotas(c: 1 | 3 | 6): void {
-    this.cuotas = c;
-    this.actualizarSimulacion();
+  calculateCosts() {
+    const amount = this.loanForm.value.amount;
+    const installments = this.loanForm.value.installments;
+    
+    this.lowCreditCost = this.calculateCuota(amount, installments, 'bajo');
+    this.highCreditCost = this.calculateCuota(amount, installments, 'alto');
+    
+    this.lowTotalCost = installments === 1 ? this.lowCreditCost : this.lowCreditCost * installments;
+    this.highTotalCost = installments === 1 ? this.highCreditCost : this.highCreditCost * installments;
+    
+    this.showTotal = installments === 1;
   }
 
-  actualizarSimulacion(): void {
-    this.puntajeAnimado = this.calcularPuntaje();
-    this.calcularPagos();
+  getDayName(date: Date): string {
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    return days[date.getDay()];
   }
 
-  calcularPuntaje(): number {
-    let puntaje = 100;
-    if (this.monto <= 500000) puntaje -= 15;
-    else if (this.monto <= 1000000) puntaje -= 10;
-    else if (this.monto >= 3000000) puntaje -= 20;
-
-    if (this.cuotas === 3) puntaje -= 10;
-    else if (this.cuotas === 6) puntaje -= 20;
-
-    return Math.max(0, Math.min(100, puntaje));
+  formatCurrency(value: number): string {
+    return this.currencyPipe.transform(value, 'COP', 'symbol', '1.0-0')?.replace('COP', '$') || '';
   }
 
-  calcularPagos(): void {
-    const pagoAlto = this.calcularCuota(this.monto, this.cuotas, this.plazoDias, 'alto');
-    const pagoBajo = this.calcularCuota(this.monto, this.cuotas, this.plazoDias, 'bajo');
-
-    this.pagoAlto = Math.round(pagoAlto * this.cuotas);
-    this.pagoBajo = Math.round(pagoBajo * this.cuotas);
-  }
-
-  calcularCuota(monto: number, cuotas: number, dias: number, tipo: 'alto' | 'bajo'): number {
-    const tasaEfectivaAnual = tipo === 'alto' ? 0.73 : 0.61; // TEA real del Excel Solventa
-    const tasaDiaria = Math.pow(1 + tasaEfectivaAnual, 1 / 365) - 1;
-
-    const montoFinal = monto * Math.pow(1 + tasaDiaria, dias);
-    const cuota = montoFinal / cuotas;
-
-    return Math.round(cuota);
-  }
-
-  getPuntajeX(puntaje: number): number {
-    return 110 + 90 * Math.cos(Math.PI * (puntaje / 100));
-  }
-
-  getPuntajeY(puntaje: number): number {
-    return 100 - 90 * Math.sin(Math.PI * (puntaje / 100));
+  submitLoan() {
+    window.location.href = 'https://solventa.co/simulador-de-credito';
   }
 }

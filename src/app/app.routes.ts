@@ -62,7 +62,7 @@ export const routes: Routes = [
     path: 'simulador-solventa',
     loadComponent: () =>
       import('./components/simuladores/solventa/simulador-solventa.component')
-        .then(m => m.SolventaComponent),
+        .then(m => m.SimuladorSolventaComponent),
     title: 'Simulador Solventa - Incredicol',
     data: {
       montoMin: 150000,
