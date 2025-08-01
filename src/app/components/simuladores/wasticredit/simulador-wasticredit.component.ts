@@ -11,17 +11,17 @@ import { FormsModule } from '@angular/forms';
 })
 export class SimuladorWasticreditComponent {
   monto = 300000;
-  plazo = 14; // 14 o 30 días
+  plazo = 14;
 
-  // Interés diario compuesto real para 30 días basado en simulador original
+
   private readonly tasaInteres14 = 0.008368;
-  private readonly tasaInteres30Diaria = 0.0005827; // 0.05827% diario compuesto ≈ 1.75% total
+  private readonly tasaInteres30Diaria = 0.0005827;
 
   private readonly porcentajeFirma14 = 0.14;
   private readonly porcentajeFirma30 = 0.30;
 
   get esPromocion(): boolean {
-    return true; // siempre activa
+    return true;
   }
 
   get interesBase(): number {
