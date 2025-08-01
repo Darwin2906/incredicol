@@ -77,7 +77,22 @@ export class ComparacionComponent implements OnInit {
       destacado: true,
       rutaSimulador: 'galilea',
       faqUrl: 'https://galilea.co/preguntas-frecuentes'
-    }
+    },
+    {
+  id: 'wasticredit',
+  nombre: 'WastiCredit',
+  montoMin: 300000,
+  montoMax: 1000000,
+  plazoMin: 1,
+  plazoMax: 30,
+  tasaInteres: 0.0000875,
+  comisionFija: 45000,
+  tiempoDesembolso: 'En minutos',
+  descuentos: 'Descuento en firma electrónica',
+  destacado: true,
+  rutaSimulador: 'wasticredit',
+  faqUrl: 'https://prestamos.wasticredit.com.co/faq'
+  }
   ];
 
   plataformasFiltradas: any[] = [];

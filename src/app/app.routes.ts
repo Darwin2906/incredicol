@@ -83,6 +83,18 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'simulador-wasticredit',
+    loadComponent: () =>
+      import('./components/simuladores/wasticredit/simulador-wasticredit.component')
+        .then(m => m.SimuladorWasticreditComponent),
+    title: 'Simulador WastiCredit - Incredicol',
+    data: {
+      montoMin: 300000,
+      montoMax: 1000000,
+      plazos: [1, 30]
+    }
+  },
+  {
     path: '**',
     redirectTo: 'quienes-somos'
   }

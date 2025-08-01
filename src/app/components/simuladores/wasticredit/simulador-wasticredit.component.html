@@ -1,0 +1,38 @@
+<div class="simulador-container">
+  <h2>PRESTAMOS 100% EN LÍNEA</h2>
+
+  <div class="modo-pago">
+    <button class="activo">Pago Único</button>
+  </div>
+
+  <label for="monto">Simula tu préstamo</label>
+  <div class="slider-container">
+    <button (click)="cambiarMonto(-10000)">-</button>
+    <input type="range" [(ngModel)]="monto" min="300000" max="1000000" step="10000" />
+    <button (click)="cambiarMonto(10000)">+</button>
+    <span>{{ monto | currency:'COP':'symbol':'1.0-0' }}</span>
+  </div>
+
+  <div class="plazos">
+    <button [class.selected]="plazo === 14" (click)="plazo = 14">14 Días</button>
+    <button [class.selected]="plazo === 30" (click)="plazo = 30">30 Días</button>
+  </div>
+
+  <div class="detalles">
+    <p>Cantidad Solicitada: {{ monto | currency:'COP' }}</p>
+
+    <p>
+      Interés:
+      <s>{{ interesBase | currency:'COP' }}</s>
+      <span class="resaltado">{{ interes | currency:'COP' }}</span>
+    </p>
+
+    <p>
+      Tarifa Firma Electrónica (Opcional):
+      <s>{{ tarifaFirmaBase | currency:'COP' }}</s>
+      <span class="resaltado">{{ tarifaFirma | currency:'COP' }}</span>
+    </p>
+
+    <p><strong>Total a Pagar: {{ totalPagar | currency:'COP' }}</strong></p>
+  </div>
+</div>
