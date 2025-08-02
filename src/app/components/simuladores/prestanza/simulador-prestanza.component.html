@@ -1,0 +1,97 @@
+<!-- simulador-prestanza.component.html -->
+<div class="solicitud-container">
+  <h1 class="titulo">Solicitud de préstamo</h1>
+
+  <div class="campo">
+    <label class="pregunta">¿Qué tiempo necesitas?</label>
+    <div class="slider-container">
+      <div class="valor-tiempo">{{ plazo() }} mes{{ plazo() > 1 ? 'es' : '' }}</div>
+      <input 
+        type="range" 
+        min="1" 
+        max="6" 
+        step="1"
+        [value]="plazo()"
+        (input)="actualizarPlazo($any($event.target).value)"
+        class="slider-tiempo">
+      <div class="limites-tiempo">
+        <span>1 mes</span>
+        <span>6 meses</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="campo">
+    <label class="pregunta">¿Cuánto dinero necesitas?</label>
+    <div class="slider-container">
+      <div class="valor-monto">{{ formatearMoneda(monto()) }}</div>
+      <input 
+        type="range" 
+        min="100000" 
+        max="2000000" 
+        step="100000"
+        [value]="monto()"
+        (input)="actualizarMonto($any($event.target).value)"
+        class="slider-dinero">
+      <div class="limites-dinero">
+        <span>{{ formatearMoneda(100000) }}</span>
+        <span>{{ formatearMoneda(2000000) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="opcionales">
+    <div class="opcional" (click)="toggleAval()">
+      <div class="checkbox-container">
+        <input type="checkbox" [checked]="mostrarAval()" (change)="toggleAval()">
+        <span class="checkmark"></span>
+      </div>
+      <div class="opcional-details">
+        <div class="opcional-title">Aval (Opcional)</div>
+        <div class="opcional-description">Protección adicional para tu préstamo</div>
+      </div>
+    </div>
+    
+    <div class="opcional" (click)="toggleRed()">
+      <div class="checkbox-container">
+        <input type="checkbox" [checked]="mostrarRed()" (change)="toggleRed()">
+        <span class="checkmark"></span>
+      </div>
+      <div class="opcional-details">
+        <div class="opcional-title">Red Prestonza (Opcional)</div>
+        <div class="opcional-description">Beneficios exclusivos para miembros</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resumen">
+    <div class="resumen-header">Monto Solicitado</div>
+    <div class="monto-solicitado">{{ formatearMoneda(monto()) }}</div>
+    
+    <div class="detalle">
+      <div class="item">
+        <div class="item-label">Interés</div>
+        <div class="item-value">{{ formatearMoneda(resumen().interes) }}</div>
+      </div>
+      <div class="item">
+        <div class="item-label">Aval</div>
+        <div class="item-value">{{ formatearMoneda(resumen().aval) }}</div>
+      </div>
+      <div class="item">
+        <div class="item-label">Red Prestonza</div>
+        <div class="item-value">{{ formatearMoneda(resumen().redPrestonza) }}</div>
+      </div>
+      <div class="item total">
+        <div class="item-label">Total Crédito</div>
+        <div class="item-value">{{ formatearMoneda(resumen().totalCredito) }}</div>
+      </div>
+      <div class="item">
+        <div class="item-label">Pagos Mensual(es)</div>
+        <div class="item-value">{{ formatearMoneda(resumen().cuotaMensual) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón con función de redirección -->
+  <button class="btn-siguiente" (click)="redirigirAPrestanza()">Siguiente &gt;&gt;</button>
+</div>

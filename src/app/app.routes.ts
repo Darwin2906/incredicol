@@ -94,6 +94,18 @@ export const routes: Routes = [
       plazos: [1, 30]
     }
   },
+    {
+    path:'simulador-prestanza',
+    loadComponent: () =>
+      import('./components/simuladores/prestanza/simulador-prestanza.component')
+      .then(m =>m.SimuladorPrestanzaComponent),
+      title: 'Simulador Prestanza - Incredicol',
+      data:{
+        montoMin: 100000,
+        montoMax: 2000000,
+        plazos: [1,2,3,4,5,6]
+      }
+  },
   {
     path: '**',
     redirectTo: 'quienes-somos'

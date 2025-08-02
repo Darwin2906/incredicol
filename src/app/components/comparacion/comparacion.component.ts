@@ -92,7 +92,20 @@ export class ComparacionComponent implements OnInit {
   destacado: true,
   rutaSimulador: 'wasticredit',
   faqUrl: 'https://prestamos.wasticredit.com.co/faq'
-  }
+  },
+  {
+      id: 'prestanza',
+      nombre: 'Prestanza',
+      montoMin: 100000,
+      montoMax: 2000000,
+      plazoMin: 1,
+      plazoMax: 6,
+      tiempoDesembolso: '24 horas',
+      descuentos:'Descuentos para clientes recurrentes',
+      destacado: true,
+      rutaSimulador: 'prestanza',
+      faqUrl:'https://prestanza.com/colombia/solicitudes/prestamos-rapidos'
+    }
   ];
 
   plataformasFiltradas: any[] = [];
