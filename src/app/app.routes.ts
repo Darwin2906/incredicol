@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import path from 'path';
+import { title } from 'process';
 
 export const routes: Routes = [
   {
@@ -105,6 +107,18 @@ export const routes: Routes = [
         montoMax: 2000000,
         plazos: [1,2,3,4,5,6]
       }
+  },
+  {
+    path:'simulador-quipu',
+    loadComponent: () =>
+      import('./components/simuladores/quipu/simulador-quipu.component')
+      .then(m =>m.SimuladorQuipuComponent),
+    title:'Simulador Quipu - Incredicol',
+    data:{
+      montoMin: 500000,
+      montoMax: 1000000,
+      plazo:[7,8,9,10,11,12]
+    }
   },
   {
     path: '**',

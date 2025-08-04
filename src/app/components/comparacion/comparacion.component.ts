@@ -105,6 +105,19 @@ export class ComparacionComponent implements OnInit {
       destacado: true,
       rutaSimulador: 'prestanza',
       faqUrl:'https://prestanza.com/colombia/solicitudes/prestamos-rapidos'
+    },
+    {
+      id: 'quipu',
+      nombre: 'Quipu',
+      montoMin: 500000,
+      montoMax: 1000000,
+      plazoMin:7,
+      plazoMax:12,
+      tiempoDesembolso:'24 horas',
+      descuentos:'Desuentos para clientes recurrentes',
+      destacado:true,
+      rutaSimulador:'quipu',
+      faqUrl:'https://quipu.com.co/#simulador'
     }
   ];
 
