@@ -1,1 +1,78 @@
-<p>simulador-quipu works!</p>
+<!-- simulador-quipu.component.html -->
+<div class="simulador-quipu-container">
+  <div class="header">
+    <h1>Simula tu crédito</h1>
+  </div>
+
+  <div class="content">
+    <div class="form-section">
+      <h2>¿Cuánta plata necesitas?</h2>
+      
+      <div class="slider-container">
+        <span class="loan-amount">{{ formatCurrency(loanAmount()) }}</span>
+        
+        <input type="range" 
+               [min]="MIN_AMOUNT"
+               [max]="MAX_AMOUNT"
+               [step]="STEP_AMOUNT"
+               [value]="loanAmount()"
+               (input)="updateLoanAmount($any($event.target).value)"
+               class="slider">
+        
+        <div class="slider-labels">
+          <span>Mínimo: {{ formatCurrency(MIN_AMOUNT) }}</span>
+          <span>Múltiplos de {{ formatCurrency(STEP_AMOUNT) }}</span>
+          <span>Máximo: {{ formatCurrency(MAX_AMOUNT) }}</span>
+        </div>
+      </div>
+
+      <!-- Plazo automático (no seleccionable) -->
+      <div class="term-display">
+        <h2>Plazo de pago</h2>
+        <p>{{ loanTerm() }} cuotas</p>
+      </div>
+
+      <div class="monthly-payment">
+        <h2>Cuota mensual</h2>
+        <div class="payment-value">{{ formatCurrency(cuotaMensual()) }}</div>
+      </div>
+
+      <div class="disclaimer">
+        <p>La presente simulación tiene fines informativos y no significa oferta o promesa de contrato. Las condiciones finales podrían variar al momento de la aprobación.</p>
+      </div>
+    </div>
+
+    <div class="details-section">
+      <h2>Detalles del crédito</h2>
+      
+      <div class="detail-item">
+        <span>¿Cuánto pediré prestado?</span>
+        <strong>{{ formatCurrency(loanAmount()) }}</strong>
+      </div>
+      
+      <div class="detail-item">
+        <span>Pago de interés (3.94% M.V.)</span>
+        <strong>{{ formatCurrency(pagoInteres()) }}</strong>
+      </div>
+      
+      <div class="detail-item">
+        <span>Fianza IVA incluido</span>
+        <strong>{{ formatCurrency(fianza()) }}</strong>
+      </div>
+      
+      <div class="detail-item">
+        <span>Firma digital IVA incluido</span>
+        <strong>{{ formatCurrency(FIRMA_DIGITAL) }}</strong>
+      </div>
+      
+      <div class="detail-item total">
+        <span>Total a pagar</span>
+        <strong>{{ formatCurrency(totalPagar()) }}</strong>
+      </div>
+
+      <button class="request-button" (click)="requestLoan()">
+        Solicitar crédito
+      </button>
+    </div>
+  </div>
+</div>
