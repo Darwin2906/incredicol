@@ -1,0 +1,64 @@
+<div class="simulador-container">
+  <h2>¿Cuánto dinero necesitas?</h2>
+
+  <!-- Slider y botones -->
+  <div class="slider-container">
+    <button (click)="cambiarMonto(-10000)">-</button>
+    <input
+      type="range"
+      [(ngModel)]="monto"
+      min="100000"
+      max="1100000"
+      step="10000"
+    />
+    <button (click)="cambiarMonto(10000)">+</button>
+    <span>{{ monto | currency:'COP':'symbol':'1.0-0' }}</span>
+  </div>
+
+  <!-- Mensaje para clientes nuevos -->
+  <div *ngIf="monto > 500000" class="mensaje-aviso">
+    Clientes nuevos pueden pedir máximo <strong>$500.000</strong>
+  </div>
+
+  <!-- Fecha de pago -->
+  <div class="selector-fecha">
+    <label for="fecha">Fecha de pago:</label>
+    <input
+  type="date"
+  [ngModel]="fechaSeleccionada"
+  (ngModelChange)="onFechaSeleccionadaChange($event)"
+  [min]="generarFechaPorDefecto(7)"
+  [max]="generarFechaPorDefecto(30)"
+/>
+
+  </div>
+
+  <!-- Resultado -->
+  <div class="resultado">
+    <p><strong>Monto a pagar:</strong> {{ total | currency:'COP' }}</p>
+  </div>
+
+  <!-- Botón de solicitud -->
+  <button class="solicitar-btn">Solicita tu crédito</button>
+
+  <!-- Detalles -->
+  <div class="detalles">
+    <p>Interés (24.1% EA): {{ interes | currency:'COP' }}</p>
+
+    <p>
+      Fianza (opcional):
+      <input type="checkbox" [(ngModel)]="fianzaIncluida" />
+      <span>{{ fianza | currency:'COP' }}</span>
+    </p>
+
+    <p class="firma-row">
+      Firma electrónica (opcional):
+      <input type="checkbox" [(ngModel)]="firmaIncluida" />
+      <span class="firma-precio">
+        <strong>{{ firma | currency:'COP' }}</strong>
+      </span>
+    </p>
+
+    <p class="iva">IVA: {{ iva | currency:'COP' }}</p>
+  </div>
+</div>

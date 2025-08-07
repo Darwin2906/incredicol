@@ -46,15 +46,15 @@ export class SimuladorPrestanzaComponent implements OnInit {
     // Cálculos exactos según los valores de Prestanza
     const interes = Math.round(montoBase * factorInteres);
     const aval = this.mostrarAval() ? Math.round(montoBase * this.porcentajeAval) : 0;
-    const redPrestonza = this.mostrarRed() ? this.valorRedPorMes * plazoActual : 0;
+    const redPrestanza = this.mostrarRed() ? this.valorRedPorMes * plazoActual : 0;
     
-    const totalCredito = montoBase + interes + aval + redPrestonza;
+    const totalCredito = montoBase + interes + aval + redPrestanza;
     const cuotaMensual = Math.round(totalCredito / plazoActual);
 
     return {
       interes,
       aval,
-      redPrestonza,
+      redPrestanza,
       totalCredito,
       cuotaMensual
     };

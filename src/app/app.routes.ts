@@ -121,6 +121,18 @@ export const routes: Routes = [
     }
   },
   {
+    path:'simulador-doctorpeso',
+    loadComponent: () =>
+      import('./components/simuladores/doctorpeso/simulador-doctorpeso.component')
+      .then(m =>m.SimuladorDoctorpesoComponent),
+    title:'Simulador doctorpeso - Incredicol',
+    data:{
+      montoMin: 100000,
+      montoMax: 1100000,
+      plazo:[1, 30]
+    }
+  },
+  {
     path: '**',
     redirectTo: 'quienes-somos'
   }

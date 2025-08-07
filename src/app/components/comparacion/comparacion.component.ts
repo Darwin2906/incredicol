@@ -118,7 +118,21 @@ export class ComparacionComponent implements OnInit {
       destacado:true,
       rutaSimulador:'quipu',
       faqUrl:'https://quipu.com.co/#simulador'
-    }
+    },
+    {
+    id: 'doctorpeso',
+    nombre: 'DoctorPeso',
+    montoMin: 100000,
+    montoMax: 1100000,
+    plazoMin: 7,
+    plazoMax: 30,
+    tiempoDesembolso: 'Dentro de 24 horas',
+    descuentos: 'Descuento en firma electrónica del 72%',
+    destacado: true,
+    rutaSimulador: 'doctorpeso',
+    faqUrl: 'https://doctorpeso.com/faq'
+    },
+
   ];
 
   plataformasFiltradas: any[] = [];
