@@ -130,6 +130,18 @@
   cursor: pointer;
 }
 
+/* ==== AJUSTE PARA CHECKBOX DE FIANZA ==== */
+.fianza-row {
+  display: flex;
+  gap: 6px;
+    margin-left: auto;
+}
+
+.fianza-row input[type="checkbox"] {
+  margin-left: 0; /* Elimina margen extra */
+  margin-right: auto;
+}
+
 /* ==== ETIQUETA DE DESCUENTO ==== */
 .etiqueta-descuento {
   background-color: #f39c12;
