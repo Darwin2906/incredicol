@@ -132,6 +132,19 @@ export class ComparacionComponent implements OnInit {
     rutaSimulador: 'doctorpeso',
     faqUrl: 'https://doctorpeso.com/faq'
     },
+    {
+      id: 'prestaenlinea',
+      nombre:'Presta en linea',
+      montoMin: 100000,
+      montoMax: 1000000,
+      plazoMin: 4,
+      plazoMax: 30,
+      tiempoDesembolso: 'Dentro de 24 horas',
+      descuentos:'Descuento para clientes recurrentes',
+      destacado: true,
+      rutaSimulador:'prestaenlinea',
+      faqUrl:'https://www.prestaenlinea.com.co/preguntas-frecuentes'
+    }
 
   ];
 
