@@ -26,8 +26,29 @@ export class SimuladorDoctorpesoComponent {
   }
 
   get fianza(): number {
-    return this.fianzaIncluida ? Math.round(this.monto * 0.1354) : 0;
-  }
+  if (!this.fianzaIncluida) return 0;
+  if (this.diasPlazo < 7 || this.diasPlazo > 30) return 0;
+
+  const montoMin = 100000;
+  const pasoMonto = 10000;      // cada cuánto sube el monto (10k)
+  const baseFianza100k7dias = 12820;
+  const incrementoDia = 120;    // aumento de la base por cada día extra sobre 7
+  const incrementoMonto7dias = 1282; // incremento por 10k en 7 días
+  const aumentoIncrementoPorDia = 12; // el +12 diario que comentaste
+
+  const pasosDia = this.diasPlazo - 7;
+  const pasosMonto = Math.floor((this.monto - montoMin) / pasoMonto);
+
+  const basePlazo = baseFianza100k7dias + pasosDia * incrementoDia;
+  const incrementoPor10k = incrementoMonto7dias + pasosDia * aumentoIncrementoPorDia;
+
+  return Math.round(basePlazo + pasosMonto * incrementoPor10k);
+}
+
+
+
+
+
 
   get interes(): number {
     const tasaDiaria = 0.000602;
@@ -35,10 +56,9 @@ export class SimuladorDoctorpesoComponent {
   }
 
   get iva(): number {
-  if (!this.fianzaIncluida) return 0;
-  return Math.round( this.fianza  * 0.19 );
+    if (!this.fianzaIncluida) return 0;
+    return Math.round(this.fianza * 0.19);
   }
-
 
   get total(): number {
     return Math.round(
