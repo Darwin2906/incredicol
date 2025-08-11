@@ -24,13 +24,12 @@
   <div class="selector-fecha">
     <label for="fecha">Fecha de pago:</label>
     <input
-  type="date"
-  [ngModel]="fechaSeleccionada"
-  (ngModelChange)="onFechaSeleccionadaChange($event)"
-  [min]="generarFechaPorDefecto(7)"
-  [max]="generarFechaPorDefecto(30)"
-/>
-
+      type="date"
+      [ngModel]="fechaSeleccionada"
+      (ngModelChange)="onFechaSeleccionadaChange($event)"
+      [min]="generarFechaPorDefecto(7)"
+      [max]="generarFechaPorDefecto(30)"
+    />
   </div>
 
   <!-- Resultado -->
@@ -45,7 +44,7 @@
   <div class="detalles">
     <p>Interés (24.1% EA): {{ interes | currency:'COP' }}</p>
 
-    <p>
+    <p class="fianza-row">
       Fianza (opcional):
       <input type="checkbox" [(ngModel)]="fianzaIncluida" />
       <span>{{ fianza | currency:'COP' }}</span>
