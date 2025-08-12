@@ -30,11 +30,11 @@ export class SimuladorDoctorpesoComponent {
   if (this.diasPlazo < 7 || this.diasPlazo > 30) return 0;
 
   const montoMin = 100000;
-  const pasoMonto = 10000;      // cada cuánto sube el monto (10k)
+  const pasoMonto = 10000;
   const baseFianza100k7dias = 12820;
-  const incrementoDia = 120;    // aumento de la base por cada día extra sobre 7
-  const incrementoMonto7dias = 1282; // incremento por 10k en 7 días
-  const aumentoIncrementoPorDia = 12; // el +12 diario que comentaste
+  const incrementoDia = 120;
+  const incrementoMonto7dias = 1282;
+  const aumentoIncrementoPorDia = 12;
 
   const pasosDia = this.diasPlazo - 7;
   const pasosMonto = Math.floor((this.monto - montoMin) / pasoMonto);

@@ -1,0 +1,97 @@
+<div class="simulador-container">
+  <div class="tabs">
+    <button class="tab active">Pago único</button>
+  </div>
+
+  <!-- Slider Monto -->
+  <div class="slider-section">
+    <label>¿Cuánto dinero necesitas?</label>
+    <div class="slider-value">
+      {{ monto | currency : "COP" : "symbol" : "1.0-0" }}
+    </div>
+    <input
+      type="range"
+      [min]="minMonto"
+      [max]="maxMonto"
+      step="10000"
+      [(ngModel)]="monto"
+      (input)="calcular()"
+    />
+    <div class="slider-minmax">
+      <span>{{ minMonto | currency : "COP" : "symbol" : "1.0-0" }}</span>
+      <span>{{ maxMonto | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+  </div>
+
+  <!-- Slider Plazo -->
+  <div class="slider-section">
+    <label>¿Cuándo puedes pagarlo?</label>
+    <div class="slider-value">{{ plazo }} Días</div>
+    <input
+      type="range"
+      [min]="minPlazo"
+      [max]="maxPlazo"
+      step="1"
+      [(ngModel)]="plazo"
+      (input)="calcular()"
+    />
+    <div class="slider-minmax">
+      <span>{{ minPlazo }} Días</span>
+      <span>{{ maxPlazo }} Días</span>
+    </div>
+  </div>
+
+  <!-- Valores -->
+  <div class="valores-pagar">
+    <h3>Valores a pagar</h3>
+    <div class="item">
+      <span>Cantidad a solicitar</span
+      ><span>{{ monto | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+    <div class="item">
+      <span>Interés corriente</span
+      ><span>{{ interes | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+    <div class="item">
+      <span>FIANZA FGA + IVA</span
+      ><span>{{ fianza | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+    <div class="item">
+      <span>Administración</span
+      ><span>{{ administracion | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+    <div class="item">
+      <span>IVA</span
+      ><span>{{ iva | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+
+    <div class="item checkbox-item">
+      <span>Yadinero Express</span>
+      <input type="checkbox" (change)="toggleExpress()" />
+      <span>{{ express | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+
+    <small>Interés moratorio 1.8885%</small>
+  </div>
+
+  <!-- Pago final -->
+  <div class="pago-final">
+    <span class="titulo-pago">Paga tu crédito así</span>
+
+    <div>
+      <span>Fecha de pago</span>
+      <strong>{{ fechaPago }}</strong>
+    </div>
+    <div>
+      <span>Total a pagar</span>
+      <strong>{{ total | currency : "COP" : "symbol" : "1.0-0" }}</strong>
+    </div>
+
+    <small>
+      Estos valores pueden sufrir modificaciones al momento del desembolso, por
+      cambio en la tasa de interés o en la cobertura de administración
+    </small>
+  </div>
+
+  <button class="btn-solicitud">¡Enviar solicitud de crédito!</button>
+</div>

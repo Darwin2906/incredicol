@@ -134,7 +134,7 @@
 .fianza-row {
   display: flex;
   gap: 6px;
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .fianza-row input[type="checkbox"] {

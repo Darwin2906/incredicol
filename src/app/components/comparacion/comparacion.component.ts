@@ -144,6 +144,19 @@ export class ComparacionComponent implements OnInit {
       destacado: true,
       rutaSimulador:'prestaenlinea',
       faqUrl:'https://www.prestaenlinea.com.co/preguntas-frecuentes'
+    },
+    {
+      id: 'yadinero',
+      nombre: 'Ya Dinero',
+      montoMin: 120000,
+      montoMax: 2000000,
+      plazoMin: 5,
+      plazoMax: 30,
+      tiempoDesembolso: 'En minutos',
+      descuentos: 'Tarifas según plazo',
+      destacado: true,
+      rutaSimulador: 'yadinero',
+      faqUrl: 'https://yadinero.com/faq'
     }
 
   ];

@@ -145,6 +145,18 @@ export const routes: Routes = [
       }
   },
   {
+    path:'simulador-yadinero',
+    loadComponent:() =>
+      import('./components/simuladores/yadinero/simulador-yadinero.component')
+      .then(m =>m.SimuladorYaDineroComponent),
+      title:'Simulador Ya dinero - Incredicol',
+      data: {
+        montoMin: 120000,
+        montoMax: 2000000,
+        plazo:[5, 30]
+      }
+  },
+  {
     path: '**',
     redirectTo: 'quienes-somos'
   }
