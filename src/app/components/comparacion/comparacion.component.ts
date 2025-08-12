@@ -134,7 +134,7 @@ export class ComparacionComponent implements OnInit {
     },
     {
       id: 'prestaenlinea',
-      nombre:'Presta en linea',
+      nombre:'Presta en Linea',
       montoMin: 100000,
       montoMax: 1000000,
       plazoMin: 4,

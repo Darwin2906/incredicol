@@ -1,1 +1,98 @@
-<p>simulador-prestaenlinea works!</p>
+<!-- simulador-prestaenlinea.component.html -->
+<div class="simulator-container">
+  <div class="simulator-header">
+    <h1>Calcula tu Credi One</h1>
+    <p>¡Simula tu préstamo en segundos!</p>
+  </div>
+  
+  <div class="simulator-body">
+    <!-- Sección de monto -->
+    <div class="form-section">
+      <h2 class="section-title">¿Cuánto dinero necesitas?</h2>
+      <div class="slider-container">
+        <div class="slider-labels">
+          <span>{{ formatCurrency(minAmount) }}</span>
+          <span>{{ formatCurrency(maxAmount) }}</span>
+        </div>
+        <input type="range" min="{{ minAmount }}" max="{{ maxAmount }}" 
+               [value]="amount" (input)="adjustAmount($event)" class="slider-input">
+        <div class="current-amount">{{ formatCurrency(amount) }}</div>
+      </div>
+    </div>
+    
+    <!-- Sección de plazo -->
+    <div class="form-section">
+      <h2 class="section-title">¿Cuándo puedes pagarlo?</h2>
+      <div class="slider-container">
+        <div class="slider-labels">
+          <span>{{ minDays }} días</span>
+          <span>{{ maxDays }} días</span>
+        </div>
+        <input type="range" min="{{ minDays }}" max="{{ maxDays }}" 
+               [value]="days" (input)="updateDays($event)" class="slider-input">
+        <div class="current-amount">{{ days }} días</div>
+      </div>
+    </div>
+    
+    <!-- Fecha de pago -->
+    <div class="date-card">
+      <div class="date-info">
+        <h3>Fecha de pago</h3>
+        <p>{{ formatDate(paymentDate) }} <span>({{ days }} días)</span></p>
+      </div>
+    </div>
+    
+    <!-- Detalles del préstamo -->
+    <div class="details-grid">
+      <div class="detail-row">
+        <span class="detail-label">Fecha de desembolso</span>
+        <span class="detail-value">{{ formatDate(disbursementDate) }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Monto solicitado</span>
+        <span class="detail-value">{{ formatCurrency(amount) }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Seguro (0.0%)(Opcional)</span>
+        <span class="detail-value">$0</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Fianza (11.0% Iva Inc.)(Opcional)</span>
+        <span class="detail-value">{{ formatCurrency(fianza) }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Int. Corr. (24.6% E.A. – 1.85% N.M.V.)</span>
+        <span class="detail-value">{{ formatCurrency(interest) }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Int. mora vigente (25.17% E.A. – 1.89% N.M.V.)</span>
+        <span class="detail-value">0</span>
+      </div>
+    </div>
+    
+    <!-- Totales -->
+    <div class="totals-section">
+      <div class="total-card">
+        <h3>A Pagar (sin cuota de admin.)</h3>
+        <p class="amount">{{ formatCurrency(subtotal) }}</p>
+      </div>
+      <div class="total-card">
+        <h3>Cuota Mensual Admin.</h3>
+        <p class="amount">{{ formatCurrency(adminFee) }}</p>
+      </div>
+    </div>
+    
+    <!-- Acción final -->
+    <div class="action-section">
+      <div class="discount-section">
+        <span class="discount-label">Código descuento</span>
+        <input type="text" class="discount-input" placeholder="Valider">
+      </div>
+      <button class="cta-button">¡SOLICITA YA!</button>
+    </div>
+  </div>
+  
+  <div class="simulator-footer">
+    <p>© 2023 Presta en Línea - Todos los derechos reservados</p>
+  </div>
+</div>
