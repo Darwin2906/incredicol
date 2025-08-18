@@ -90,8 +90,11 @@
   color: #27ae60;
 }
 
-/* ==== BOTÓN DE SOLICITAR ==== */
+
 .solicitar-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
   background-color: #2ecc71;
   color: white;
   padding: 14px 0;
@@ -102,14 +105,19 @@
   cursor: pointer;
   width: 100%;
   margin-bottom: 25px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* sombra suave */
 }
 
 .solicitar-btn:hover {
   background-color: #27ae60;
+  transform: scale(1.02);
 }
 
-/* ==== DETALLES DE COSTOS ==== */
+.solicitar-btn:active {
+  transform: scale(0.98);
+}
+
 .detalles {
   font-size: 0.95rem;
   line-height: 1.6;

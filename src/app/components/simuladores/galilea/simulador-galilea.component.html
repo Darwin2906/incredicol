@@ -24,16 +24,16 @@
   <div class="fecha-opciones">
     <div class="fecha-box" (click)="seleccionarFecha(16)">
       <button class="fecha-btn" [class.selected]="diasVencimiento === 16">
-        {{ obtenerFechaConDias(16) }}
-        <span *ngIf="diasVencimiento === 16" class="check-icon">✔</span>
+        {{ obtenerFechaConDias(13) }}
+        <span *ngIf="diasVencimiento === 13" class="check-icon">✔</span>
       </button>
       <span class="vence-texto left">Vence en 16 días</span>
     </div>
 
     <div class="fecha-box" (click)="seleccionarFecha(31)">
       <button class="fecha-btn" [class.selected]="diasVencimiento === 31">
-        {{ obtenerFechaConDias(31) }}
-        <span *ngIf="diasVencimiento === 31" class="check-icon">✔</span>
+        {{ obtenerFechaConDias(28) }}
+        <span *ngIf="diasVencimiento === 28" class="check-icon">✔</span>
       </button>
       <span class="vence-texto left">Vence en 31 días</span>
     </div>

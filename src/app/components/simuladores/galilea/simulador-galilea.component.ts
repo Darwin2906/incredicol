@@ -21,9 +21,9 @@ export class SimuladorGalileaComponent {
   interes: number = 0;
   costoFirma: number = 0;
   totalPagar: number = 0;
-  tasaEA: number = 0.2478; // Tasa equivalente anual (solo decorativa)
+  tasaEA: number = 0.2478;
 
-  tasaDiaria: number = 0.0006; // 0.06%
+  tasaDiaria: number = 0.0006;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {

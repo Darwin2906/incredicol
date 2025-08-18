@@ -154,24 +154,34 @@ input[type="range"] {
   margin-bottom: 12px;
 }
 
-/* Botón */
+
 .btn-solicitud {
+  display: block;
+  text-align: center;
+  text-decoration: none;
   background: #33ca2e;
   color: white;
   font-weight: bold;
   border: none;
+  border-radius: 8px;
   padding: 1rem;
   width: 100%;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .btn-solicitud:hover {
   background: #28a428;
+  transform: scale(1.02);
 }
 
-/* Responsivo */
+.btn-solicitud:active {
+  transform: scale(0.98);
+}
+
+
 @media (max-width: 480px) {
   .simulador-container {
     max-width: 100%;

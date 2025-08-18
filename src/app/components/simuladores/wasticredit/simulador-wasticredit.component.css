@@ -121,3 +121,28 @@ s {
   margin-right: 5px;
 }
 
+.solicitar-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  background:  #33ca2e;
+  color: white;
+  padding: 0.9rem 0;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.solicitar-btn:hover {
+  transform: translateY(-2px);
+  background: #33ca2e;
+}
+
+.solicitar-btn:active {
+  transform: scale(0.98);
+}

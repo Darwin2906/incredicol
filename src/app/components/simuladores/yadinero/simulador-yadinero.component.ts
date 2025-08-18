@@ -26,10 +26,10 @@ export class SimuladorYaDineroComponent {
   total = 0;
   fechaPago = '';
 
-  porcentajeFianza = 0.166;   // 16.6% aprox. (incluye IVA)
+  porcentajeFianza = 0.166;
   administracionFija = 34900; 
   expressCosto = 2600; 
-  expressIVAExtra = 494; // IVA adicional si express está activo
+  expressIVAExtra = 494;
   expressActivo = false;
 
   ngOnInit() {
@@ -37,22 +37,17 @@ export class SimuladorYaDineroComponent {
   }
 
   calcular() {
-  // Interés corriente diario simple
   this.interes = Math.round(this.monto * 0.00060671 * this.plazo);
 
-  // Fianza FGA + IVA según progresión de la tabla
   const fianzaBase = 19992;
   const incrementoFianza = 1666;
   const pasos = Math.max(0, (this.monto - 120000) / 10000);
   this.fianza = Math.round(fianzaBase + (pasos * incrementoFianza));
 
-  // Administración fija
   this.administracion = this.administracionFija;
 
-  // IVA base sobre administración
   this.iva = Math.round(this.administracion * 0.19);
 
-  // Si express está activo
   if (this.expressActivo) {
     this.iva += this.expressIVAExtra;
     this.express = this.expressCosto;
@@ -60,16 +55,12 @@ export class SimuladorYaDineroComponent {
     this.express = 0;
   }
 
-  // Total a pagar
   this.total = this.monto + this.interes + this.fianza + this.administracion + this.iva + this.express;
 
-  // Fecha de pago
   const fechaActual = new Date();
   fechaActual.setDate(fechaActual.getDate() + this.plazo - 1);
   this.fechaPago = fechaActual.toISOString().split('T')[0];
 }
-
-
 
 
 
