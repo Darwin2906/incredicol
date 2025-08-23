@@ -1,157 +1,307 @@
-/* Estilos generales */
-.quienes-somos {
-    text-align: center;
+:root {
+  --primary-green: #33ca2e;
+  --light-green: #93eb9f;
+  --dark-green: #1a8c16;
+  --light-gray: #f8f9fa;
 }
 
-.quienes-somos-title {
-    margin-top: 40px;
-    margin-bottom: 15px;
+.quienes-somos-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+  color: #333;
+  margin-top: 80px; /* Espacio para la navbar */
 }
 
-.quienes-somos-text {
-    font-size: 18px;
-    background-color: #fff;
-    padding: 20px;
-    border-left: 4px solid #33ca2e;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: justify;
-    height: 180px;
-    width: 500px;
-    margin-left: 45px;
+/* Animación de fade inicial */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.quienes-somos-contenedor {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    padding-right: 30px;
-    align-items: center;
-    /* Asegura que el contenido esté alineado verticalmente */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0; /* Inicia invisible para la animación */
 }
 
-.quienes-somos-img {
-    margin-right: -20px;
-    align-self: center;
-    /* Asegura que la imagen se centre verticalmente */
-    width: 250px;
-    height: 350px;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    -webkit-border-radius: 1rem;
-    -moz-border-radius: 1rem;
-    -ms-border-radius: 1rem;
-    -o-border-radius: 1rem;
-    object-fit: cover;
-    /* Asegura que la imagen no se deforme */
+/* Animación para elementos al hacer scroll */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-h2 {
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bolder;
-    margin-bottom: 1.5rem;
-    color: #000000;
+.section-fade {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
-/* Estilos de párrafos */
-p {
-    font-size: 18px;
-    line-height: 1.5;
-    max-width: 800px;
-    margin: 0 auto 20px;
-    text-align: justify;
+.section-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Beneficios */
-.benefits {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 0px;
+.section-hidden {
+  opacity: 0;
+  transform: translateY(50px);
 }
 
-.benefits-title {
-    margin-bottom: 15px;
+/* Estilos existentes se mantienen igual */
+.hero-section {
+  background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+  color: white;
 }
 
-.benefit-item {
-    background: #e8f5e9;
-    padding: 15px;
-    border-radius: 10px;
-    width: 270px;
-    text-align: center;
-    transition: transform 0.3s;
+.section-title {
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 25px;
+  color: var(--dark-green);
 }
 
-.benefit-item:hover {
-    transform: scale(1.05);
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: var(--primary-green);
+  border-radius: 2px;
 }
 
-/* Sección de Plataformas Fintech */
-.fintech-platforms {
-    padding: 40px;
-    text-align: center;
+.content-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-top: 4px solid var(--primary-green);
+  transition: transform 0.3s ease;
 }
 
-.fintech-platforms-title {
-    margin-top: 0;
+.content-card:hover {
+  transform: translateY(-5px);
 }
 
-.platform-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
+.mission-card {
+  background: rgba(147, 235, 159, 0.15);
+  border-radius: 12px;
+  border-left: 4px solid var(--dark-green);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-.platform-item {
-    display: flex;
-    align-items: center;
-    width: 260px;
-    padding: 18px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 20px;
-    transition: transform 0.3s;
-    margin-top: 15px;
+.fintech-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-bottom: 4px solid var(--primary-green);
+  color: #333;
 }
 
-.platform-item:hover {
-    transform: scale(1.05);
+.fintech-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
 }
 
-/* Círculo numerado */
-.circle {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
-    border: 2px solid black;
-    text-align: center;
-    font-size: 18px;
-    margin-right: 10px;
-    background: white;
+.fintech-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(51, 202, 46, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-green);
+  font-size: 1.5rem;
 }
 
-/* Colores de las tarjetas */
-.yellow {
-    background: #fff9c4;
+.feature-list {
+  list-style: none;
+  padding-left: 0;
 }
 
-.green-light {
-    background: #c8e6c9;
+.feature-list li {
+  padding: 10px 0;
+  border-bottom: 1px dashed #e0e0e0;
 }
 
-.green-dark {
-    background: #80cbc4;
+.feature-list li:last-child {
+  border-bottom: none;
 }
 
-.blue-light {
-    background: #90caf9;
+.benefit-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  border-top: 3px solid var(--light-green);
+  color: #333;
 }
 
-.blue-dark {
-    background: #4db6ac;
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.benefit-icon {
+  width: 70px;
+  height: 70px;
+  background: rgba(51, 202, 46, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: var(--primary-green);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  background: primary-green;
+  transform: scale(1.1);
+}
+
+.platform-card {
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  color: #333;
+  height: 100%;
+}
+
+.platform-card:hover {
+  transform: translateY(-5px);
+}
+
+.platform-number {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 35px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.cta-section {
+  background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+}
+
+.btn-outline-dark {
+  border-color: #333;
+  color: #333;
+}
+
+.btn-outline-dark:hover {
+  background-color: #333;
+  color: white;
+}
+
+/* Colores específicos para las tarjetas de plataformas */
+.platform-card:nth-child(1) {
+  background-color: rgba(255, 249, 196, 0.7);
+}
+
+.platform-card:nth-child(2) {
+  background-color: rgba(200, 230, 201, 0.7);
+}
+
+.platform-card:nth-child(3) {
+  background-color: rgba(128, 203, 196, 0.7);
+}
+
+.platform-card:nth-child(4) {
+  background-color: rgba(144, 202, 249, 0.7);
+}
+
+.platform-card:nth-child(5) {
+  background-color: rgba(255, 204, 188, 0.7);
+}
+
+.platform-card:nth-child(6) {
+  background-color: rgba(221, 212, 232, 0.7);
+}
+
+.platform-card:nth-child(7) {
+  background-color: rgba(187, 222, 251, 0.7);
+}
+
+.platform-card:nth-child(8) {
+  background-color: rgba(255, 224, 178, 0.7);
+}
+
+.platform-card:nth-child(9) {
+  background-color: rgba(209, 231, 221, 0.7);
+}
+
+.platform-card:nth-child(10) {
+  background-color: rgba(255, 205, 210, 0.7);
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Ajuste para anclaje con navbar fija */
+.scroll-target {
+  scroll-margin-top: 100px;
+  display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .quienes-somos-container {
+    margin-top: 50px;
+  }
+  
+  .hero-section {
+    padding: 1.5rem 0;
+  }
+  
+  .display-4 {
+    font-size: 2.2rem;
+  }
+  
+  .lead {
+    font-size: 1.2rem;
+  }
+  
+  .content-card, .fintech-card, .mission-card {
+    padding: 1.2rem !important;
+  }
+  
+  .section-title::after {
+    width: 60px;
+  }
+  
+  .benefit-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.3rem;
+  }
+  
+  .scroll-target {
+    scroll-margin-top: 80px;
+  }
 }

@@ -1,0 +1,53 @@
+/* Estilos para el navbar */
+.navbar {
+  padding: 10px 0;
+}
+
+.navbar-brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo-text {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.logo-sub {
+  font-family: Arial, sans-serif;
+  font-size: 0.7rem;
+  color: #333;
+}
+
+/* Menú centrado */
+.navbar-nav.mx-auto {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navbar .nav-item .nav-link.active {
+  background-color: #33ca2e !important;
+  color: white !important;
+  border-radius: 5px;
+}
+
+.navbar .nav-item .nav-link:hover:not(.active) {
+  background-color: #33ca2e;
+  color: white !important;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.navbar .nav-link {
+  color: black !important;
+  padding: 10px 15px;
+  margin: 0 5px;
+}
+
+/* Espaciado para body */
+body {
+  padding-top: 80px;
+  font-family: Arial, sans-serif;
+}

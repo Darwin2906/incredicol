@@ -1,11 +1,33 @@
-<!-- Menú de navegación (Navbar) -->
-<nav class="navbar">
-  <ul>
-    <li><a href="#/quienes-somos">¿Quiénes somos?</a></li>
-    <li><a href="#/orientacion">Orientación</a></li>
-    <li><a href="#/plataformas">Plataformas</a></li>
-    <li><a href="#/comparacion">Comparación</a></li>
-  </ul>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #93eb9f;">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <span class="logo-text">Incredicol</span>
+      <span class="logo-sub">Simuladores de crédito</span>
+    </a>
+    
+    <button class="navbar-toggler" type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link fw-bold" routerLink="/quienes-somos" routerLinkActive="active">¿Quiénes somos?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold" routerLink="/orientacion" routerLinkActive="active">Orientación</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold" routerLink="/plataformas" routerLinkActive="active">Plataformas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold" routerLink="/comparacion" routerLinkActive="active">Comparación</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
+
 <router-outlet></router-outlet>
-  
