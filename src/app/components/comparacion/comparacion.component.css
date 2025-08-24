@@ -1,147 +1,113 @@
-/* Estilo general del contenedor */
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  color: #333;
-}
-
-/* Títulos */
-h2 {
-  margin-top: 0.2rem;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bolder;
-  margin-bottom: 1.5rem;
-  color: #000000;
-}
-
-h4 {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bolder;
-  margin-bottom: 1.5rem;
-  color: rgb(0, 0, 0);
-}
-
-/* Campos de formulario */
-form label {
-  font-weight: 500;
+/* Estilos personalizados para el comparador de créditos */
+:host {
   display: block;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  padding-top: 80px;
+  min-height: 100vh;
 }
 
-input[type="number"] {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 0.6rem;
-  transition: border-color 0.3s;
-}
-
-input[type="number"]:focus {
-  border-color: #33ca2e;
-  outline: none;
-}
-
-/* Mensajes de validación */
-.text-danger {
-  color: #d9534f;
-  font-size: 0.9rem;
-  margin-top: 0.2rem;
-  display: block;
-}
-
-/* Botón calcular */
-button.btn-primary {
-  width: 100%;
-  margin-top: 2rem;
-  background-color: #33ca2e;
-  color: white;
-  font-size: 1.1rem;
-  padding: 0.9rem;
+.card {
   border: none;
-  border-radius: 0.6rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 15px;
 }
 
-button.btn-primary:hover {
-  background-color: #2ca226;
+.card-header {
+  border-radius: 15px 15px 0 0 !important;
 }
 
-button.btn-primary:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
+.form-range::-webkit-slider-thumb {
+  background: #198754;
 }
 
-/* Tabla de resultados */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-  background-color: #fff;
-  border-radius: 0.6rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+.form-range::-moz-range-thumb {
+  background: #198754;
+}
+
+.form-range::-ms-thumb {
+  background: #198754;
 }
 
 .table th {
-  background-color: #33ca2e;
-  color: white;
-  padding: 1rem;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.table td {
-  padding: 1rem;
-  font-size: 1rem;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
-
-/* Botón "Simular" */
-button.btn-outline-primary {
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  color: #33ca2e;
-  border: 2px solid #33ca2e;
-  border-radius: 0.5rem;
-  background-color: transparent;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-button.btn-outline-primary:hover {
-  background-color: #33ca2e;
+  background-color: #198754 !important;
   color: white;
 }
 
-/* Mensaje de advertencia */
-.text-warning {
-  text-align: center;
-  font-size: 1rem;
-  color: #e67e22;
-  margin-top: 1rem;
+.badge {
+  font-size: 0.75em;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  h2, h4 {
+.progress {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  transition: width 0.3s ease;
+}
+
+/* Tooltip personalizado */
+.tooltip {
+  font-size: 0.875rem;
+}
+
+/* Estilo para la tabla responsive */
+.table-responsive {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Efecto hover para las filas de la tabla */
+.table-hover tbody tr:hover {
+  background-color: rgba(25, 135, 84, 0.1);
+}
+
+/* Estilo para el input de rango */
+.form-range:focus {
+  outline: none;
+}
+
+.form-range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.25);
+}
+
+.form-range:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.25);
+}
+
+/* Estilo para el input de monto */
+.input-group-text {
+  background-color: #f8f9fa;
+  border-right: none;
+}
+
+.form-control:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+/* Ajustes para el contenedor principal */
+.comparador-container {
+  margin-top: 20px;
+}
+
+.comparador-card {
+  margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :host {
+    padding-top: 70px;
+  }
+  
+  .card-header h2 {
     font-size: 1.5rem;
   }
-
-  input[type="number"],
-  button {
-    font-size: 1rem;
+  
+  .table-responsive {
+    font-size: 0.875rem;
   }
-
-  .table th, .table td {
-    font-size: 0.9rem;
-    padding: 0.7rem;
+  
+  .badge {
+    font-size: 0.7em;
   }
 }

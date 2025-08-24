@@ -79,21 +79,21 @@ export class ComparacionComponent implements OnInit {
       faqUrl: 'https://galilea.co/preguntas-frecuentes'
     },
     {
-  id: 'wasticredit',
-  nombre: 'WastiCredit',
-  montoMin: 300000,
-  montoMax: 1000000,
-  plazoMin: 1,
-  plazoMax: 30,
-  tasaInteres: 0.0000875,
-  comisionFija: 45000,
-  tiempoDesembolso: 'En minutos',
-  descuentos: 'Descuento en firma electrónica',
-  destacado: true,
-  rutaSimulador: 'wasticredit',
-  faqUrl: 'https://prestamos.wasticredit.com.co/faq'
-  },
-  {
+      id: 'wasticredit',
+      nombre: 'WastiCredit',
+      montoMin: 300000,
+      montoMax: 1000000,
+      plazoMin: 1,
+      plazoMax: 30,
+      tasaInteres: 0.0000875,
+      comisionFija: 45000,
+      tiempoDesembolso: 'En minutos',
+      descuentos: 'Descuento en firma electrónica',
+      destacado: true,
+      rutaSimulador: 'wasticredit',
+      faqUrl: 'https://prestamos.wasticredit.com.co/faq'
+    },
+    {
       id: 'prestanza',
       nombre: 'Prestanza',
       montoMin: 100000,
@@ -120,17 +120,17 @@ export class ComparacionComponent implements OnInit {
       faqUrl:'https://quipu.com.co/#simulador'
     },
     {
-    id: 'doctorpeso',
-    nombre: 'DoctorPeso',
-    montoMin: 100000,
-    montoMax: 1100000,
-    plazoMin: 7,
-    plazoMax: 30,
-    tiempoDesembolso: 'Dentro de 24 horas',
-    descuentos: 'Descuento en firma electrónica del 72%',
-    destacado: true,
-    rutaSimulador: 'doctorpeso',
-    faqUrl: 'https://doctorpeso.com/faq'
+      id: 'doctorpeso',
+      nombre: 'DoctorPeso',
+      montoMin: 100000,
+      montoMax: 1100000,
+      plazoMin: 7,
+      plazoMax: 30,
+      tiempoDesembolso: 'Dentro de 24 horas',
+      descuentos: 'Descuento en firma electrónica del 72%',
+      destacado: true,
+      rutaSimulador: 'doctorpeso',
+      faqUrl: 'https://doctorpeso.com/faq'
     },
     {
       id: 'prestaenlinea',
@@ -139,7 +139,7 @@ export class ComparacionComponent implements OnInit {
       montoMax: 1000000,
       plazoMin: 4,
       plazoMax: 30,
-      tiempoDesembolso: 'Dentro de 24 horas',
+      tiempoDesembolso: 'Dentro of 24 hours',
       descuentos:'Descuento para clientes recurrentes',
       destacado: true,
       rutaSimulador:'prestaenlinea',
@@ -158,42 +158,49 @@ export class ComparacionComponent implements OnInit {
       rutaSimulador: 'yadinero',
       faqUrl: 'https://yadinero.com/faq'
     }
-
   ];
 
   plataformasFiltradas: any[] = [];
 
   ngOnInit() {
     this.calcularOpciones();
+    this.inicializarTooltips();
+  }
+
+  inicializarTooltips() {
+    // Inicializar tooltips de Bootstrap
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new (window as any).bootstrap.Tooltip(tooltipTriggerEl);
+    });
   }
 
   calcularOpciones() {
-  this.plataformasFiltradas = this.plataformas
-    .filter(p =>
-      this.monto >= p.montoMin &&
-      this.monto <= p.montoMax &&
-      this.plazo >= p.plazoMin &&
-      this.plazo <= p.plazoMax &&
-      (p.id !== 'galilea' || this.plazo <= 25) // Mostrar Galilea si el plazo es 25 o menor
-    )
-    .map(p => {
-      const tasaDiaria = p.tasaInteresDiaria ?? 0;
-      const interes = this.monto * tasaDiaria * this.plazo;
+    this.plataformasFiltradas = this.plataformas
+      .filter(p =>
+        this.monto >= p.montoMin &&
+        this.monto <= p.montoMax &&
+        this.plazo >= p.plazoMin &&
+        this.plazo <= p.plazoMax &&
+        (p.id !== 'galilea' || this.plazo <= 25)
+      )
+      .map(p => {
+        const tasaDiaria = p.tasaInteresDiaria ?? 0;
+        const interes = this.monto * tasaDiaria * this.plazo;
 
-      const comision = p.comisionFija ?? (this.monto * (p.comision ?? 0));
-      const pagoTotal = this.monto + interes + comision;
+        const comision = p.comisionFija ?? (this.monto * (p.comision ?? 0));
+        const pagoTotal = this.monto + interes + comision;
 
-      return {
-        ...p,
-        pagoTotal: Math.round(pagoTotal),
-        interes: Math.round(interes),
-        comision: Math.round(comision),
-        costoDiario: Math.round(pagoTotal / this.plazo),
-        plazos: [this.plazo]
-      };
-    });
-}
-
+        return {
+          ...p,
+          pagoTotal: Math.round(pagoTotal),
+          interes: Math.round(interes),
+          comision: Math.round(comision),
+          costoDiario: Math.round(pagoTotal / this.plazo),
+          plazos: [this.plazo]
+        };
+      });
+  }
 
   irASimulador(id: string) {
     this.router.navigate([`/simulador-${id}`], {
