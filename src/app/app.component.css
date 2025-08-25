@@ -18,7 +18,7 @@
 .logo-sub {
   font-family: Arial, sans-serif;
   font-size: 0.7rem;
-  color: #333;
+  color: #000;
 }
 
 /* Menú centrado */
@@ -46,8 +46,6 @@
   margin: 0 5px;
 }
 
-/* Espaciado para body */
 body {
-  padding-top: 80px;
   font-family: Arial, sans-serif;
 }

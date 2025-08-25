@@ -1,76 +1,53 @@
-.contenedor-plataformas {
-    font-family: 'Segoe UI', sans-serif;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+/* Ajuste para que el contenido no quede oculto detrás del navbar */
+.plataformas-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 7rem 2rem 2rem;
+
 }
 
-h2 {
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bolder;
-    margin-bottom: 1.5rem;
-    color: #000000;
+/* Cards de fintech */
+.card-fintech {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  background: #fff;
 }
 
-.plataformas-titulo {
-    text-align: center;
-    margin-top: -30px;
-    font-size: 1.4rem;
+/* Título de la plataforma */
+.card-fintech h5 {
+  font-weight: bold;
+  color: #007a33; /* Verde para resaltar */
+  margin-bottom: 1rem;
 }
 
-/* Opciones Plataformas (Accordion) */
-
-.opciones-plataformas {
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    margin-top: -30px;
+/* Texto y lista */
+.card-fintech p,
+.card-fintech ul {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
 }
 
-.opciones-plataformas details {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    padding: 1rem 1.5rem;
-    margin: 0 auto 1rem auto;
-    width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
-    font-size: 18px;
-    text-align: left;
+/* Botón al mismo nivel en todas las tarjetas */
+.card-fintech .btn {
+  margin-top: auto;
+  align-self: center;
+  width: 100%;
+  max-width: 250px;
 }
 
-.opciones-plataformas details[open] {
-    background-color: #93eb9f;
-    color: #000000;
+/* Botón personalizado */
+.btn-faq {
+  background-color: #007a33;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
 }
 
-.opciones-plataformas summary {
-    font-weight: bold;
-    cursor: pointer;
-    list-style: none;
-    position: relative;
-    padding-right: 20px;
-}
-
-.opciones-plataformas summary::after {
-    content: "▼";
-    font-size: 14px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: rotate(0deg);
-    transition: transform 0.3s ease;
-}
-
-.opciones-plataformas details[open] summary::after {
-    transform: rotate(180deg);
-}
-
-.opciones-plataformas p {
-    margin-top: 1rem;
-    font-size: 17px;
-    line-height: 1.5;
+.btn-faq:hover {
+  background-color: #005c26;
 }

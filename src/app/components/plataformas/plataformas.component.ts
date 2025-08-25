@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './plataformas.component.html',
-  styleUrl: './plataformas.component.css'
+  styleUrls: ['./plataformas.component.css'] // ✅ en plural
 })
 export class PlataformasComponent {
 
