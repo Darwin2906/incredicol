@@ -26,29 +26,24 @@ export class SimuladorDoctorpesoComponent {
   }
 
   get fianza(): number {
-  if (!this.fianzaIncluida) return 0;
-  if (this.diasPlazo < 7 || this.diasPlazo > 30) return 0;
+    if (!this.fianzaIncluida) return 0;
+    if (this.diasPlazo < 7 || this.diasPlazo > 30) return 0;
 
-  const montoMin = 100000;
-  const pasoMonto = 10000;
-  const baseFianza100k7dias = 12820;
-  const incrementoDia = 120;
-  const incrementoMonto7dias = 1282;
-  const aumentoIncrementoPorDia = 12;
+    const montoMin = 100000;
+    const pasoMonto = 10000;
+    const baseFianza100k7dias = 12820;
+    const incrementoDia = 120;
+    const incrementoMonto7dias = 1282;
+    const aumentoIncrementoPorDia = 12;
 
-  const pasosDia = this.diasPlazo - 7;
-  const pasosMonto = Math.floor((this.monto - montoMin) / pasoMonto);
+    const pasosDia = this.diasPlazo - 7;
+    const pasosMonto = Math.floor((this.monto - montoMin) / pasoMonto);
 
-  const basePlazo = baseFianza100k7dias + pasosDia * incrementoDia;
-  const incrementoPor10k = incrementoMonto7dias + pasosDia * aumentoIncrementoPorDia;
+    const basePlazo = baseFianza100k7dias + pasosDia * aumentoIncrementoPorDia;
+    const incrementoPor10k = incrementoMonto7dias + pasosDia * aumentoIncrementoPorDia;
 
-  return Math.round(basePlazo + pasosMonto * incrementoPor10k);
-}
-
-
-
-
-
+    return Math.round(basePlazo + pasosMonto * incrementoPor10k);
+  }
 
   get interes(): number {
     const tasaDiaria = 0.000602;
@@ -72,7 +67,12 @@ export class SimuladorDoctorpesoComponent {
 
   get fechaPagoTexto(): string {
     const fecha = new Date(this.fechaSeleccionada);
-    return fecha.toLocaleDateString('es-CO');
+    const opciones: Intl.DateTimeFormatOptions = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    };
+    return new Intl.DateTimeFormat('es-CO', opciones).format(fecha);
   }
 
   cambiarMonto(valor: number): void {
@@ -96,14 +96,14 @@ export class SimuladorDoctorpesoComponent {
 
   actualizarDiasPlazo(): void {
     const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-
     const fecha = new Date(this.fechaSeleccionada);
+
+    hoy.setHours(0, 0, 0, 0);
     fecha.setHours(0, 0, 0, 0);
 
     const diferenciaMs = fecha.getTime() - hoy.getTime();
-    const dias = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24)) + 1;
+    const milisegundosPorDia = 1000 * 60 * 60 * 24;
 
-    this.diasPlazo = dias;
+    this.diasPlazo = Math.round(diferenciaMs / milisegundosPorDia);
   }
 }

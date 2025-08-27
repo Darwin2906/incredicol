@@ -213,6 +213,6 @@ export class SimuladorSolventaComponent implements OnInit {
   }
 
   submitLoan() {
-    window.location.href = 'https://solventa.co/simulador-de-credito';
+    window.open('https://solventa.co/simulador-de-credito', '_blank');
   }
 }
