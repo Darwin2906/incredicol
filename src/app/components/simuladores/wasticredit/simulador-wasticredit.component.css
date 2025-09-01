@@ -13,8 +13,9 @@
 .simulador-container h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #2c6de9;
+  color: #33ca2e;
   font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .modo-pago {
@@ -50,15 +51,47 @@
   height: 2.2rem;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #2c6de9;
+  color: #33ca2e;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slider-container button:hover {
+  background: #e8e8e8;
 }
 
 input[type="range"] {
   flex: 1;
-  accent-color: #2c6de9;
-  height: 5px;
-  border-radius: 5px;
+  height: 6px;
+  border-radius: 6px;
+  background: #d9d9d9;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-clip: padding-box;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #33ca2e;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #33ca2e;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
 
 .slider-container span {
@@ -87,9 +120,9 @@ input[type="range"] {
 }
 
 .plazos button.selected {
-  background: #2c6de9;
+  background: #33ca2e;
   color: white;
-  border-color: #2c6de9;
+  border-color: #33ca2e;
 }
 
 .detalles {
@@ -111,7 +144,7 @@ input[type="range"] {
 }
 
 .resaltado {
-  color: #007bff;
+  color: #33ca2e;
   font-weight: bold;
   margin-left: 5px;
 }
@@ -126,7 +159,7 @@ s {
   width: 100%;
   text-align: center;
   text-decoration: none;
-  background:  #33ca2e;
+  background: #33ca2e;
   color: white;
   padding: 0.9rem 0;
   border-radius: 10px;
@@ -140,7 +173,7 @@ s {
 
 .solicitar-btn:hover {
   transform: translateY(-2px);
-  background: #33ca2e;
+  background: #28b224;
 }
 
 .solicitar-btn:active {

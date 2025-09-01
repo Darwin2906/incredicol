@@ -2,60 +2,58 @@
   <h2>Calcula tu crédito</h2>
   <p class="text-limite-verde">Tu primera vez hasta $500.000</p>
 
-  <!-- MONTO -->
-  <label for="monto">Elige el monto</label>
-  <div class="slider-container">
-    <span class="monto-elegido">
-      {{ monto | currency : "COP" : "symbol" : "1.0-0" }}
-    </span>
-    <input
-      type="range"
-      id="monto"
-      min="200000"
-      max="1500000"
-      step="10000"
-      [(ngModel)]="monto"
-      (input)="calcularTodo()"
-    />
-  </div>
-
-  <!-- FECHAS -->
-  <p class="subtitulo-fecha">Elige la fecha de pago</p>
-  <div class="fecha-opciones">
-    <div class="fecha-box" (click)="seleccionarFecha(16)">
-      <button class="fecha-btn" [class.selected]="diasVencimiento === 16">
-        {{ obtenerFechaConDias(13) }}
-        <span *ngIf="diasVencimiento === 13" class="check-icon">✔</span>
-      </button>
-      <span class="vence-texto left">Vence en 16 días</span>
+  <!-- Sección Horizontal -->
+  <div class="horizontal-layout">
+    <!-- MONTO -->
+    <div class="monto-section">
+      <label for="monto">Elige el monto</label>
+      <span class="monto-elegido">
+        {{ monto | currency : "COP" : "symbol" : "1.0-0" }}
+      </span>
+      <input
+        type="range"
+        id="monto"
+        min="200000"
+        max="1500000"
+        step="10000"
+        [(ngModel)]="monto"
+        (input)="calcularTodo()"
+      />
     </div>
 
-    <div class="fecha-box" (click)="seleccionarFecha(31)">
-      <button class="fecha-btn" [class.selected]="diasVencimiento === 31">
-        {{ obtenerFechaConDias(28) }}
-        <span *ngIf="diasVencimiento === 28" class="check-icon">✔</span>
-      </button>
-      <span class="vence-texto left">Vence en 31 días</span>
+    <!-- FECHAS -->
+    <div class="fechas-section">
+      <p class="subtitulo-fecha">Elige la fecha de pago</p>
+      <div class="fecha-opciones">
+        <button class="fecha-btn" [class.selected]="diasVencimiento === 14" (click)="seleccionarFecha(14)">
+          {{ obtenerFechaConDias(14) }}
+          <span *ngIf="diasVencimiento === 14" class="check-icon">✔</span>
+          <small>Vence en 14 días</small>
+        </button>
+
+        <button class="fecha-btn" [class.selected]="diasVencimiento === 29" (click)="seleccionarFecha(29)">
+          {{ obtenerFechaConDias(29) }}
+          <span *ngIf="diasVencimiento === 29" class="check-icon">✔</span>
+          <small>Vence en 29 días</small>
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- COSTOS FIJOS -->
-  <div class="costos">
+  <!-- COSTOS -->
+  <div class="costos tarjeta">
     <h4>Costos fijos</h4>
     <div class="detalle">
       <span>Monto solicitado</span>
       <span>{{ monto | currency : "COP" : "symbol" : "1.0-0" }}</span>
     </div>
     <div class="detalle">
-      <span
-        >Interés corriente ({{ tasaEA * 100 | number : "1.2-2" }}% E.A)</span
-      >
+      <span>Interés corriente ({{ tasaEA * 100 | number : "1.2-2" }}% E.A)</span>
       <span>{{ interes | currency : "COP" : "symbol" : "1.0-0" }}</span>
     </div>
   </div>
 
-  <!-- COSTOS OPCIONALES -->
-  <div class="costos">
+  <div class="costos tarjeta">
     <h4>Costo opcional</h4>
     <div class="detalle">
       <label class="checkbox-label">
@@ -71,7 +69,7 @@
   </div>
 
   <!-- TOTAL -->
-  <div class="total">
+  <div class="total tarjeta">
     <div class="detalle">
       <strong>Total a pagar</strong>
       <strong>{{ totalPagar | currency : "COP" : "symbol" : "1.0-0" }}</strong>
@@ -83,7 +81,6 @@
   </div>
 
   <a class="btn-solicitar" href="https://galilea.co" target="_blank" rel="noopener noreferrer">
-  Solicitar crédito
+    Solicitar crédito
   </a>
-
 </div>

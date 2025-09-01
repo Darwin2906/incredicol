@@ -1,53 +1,41 @@
-/* Ajuste para que el contenido no quede oculto detrás del navbar */
+/* Contenedor */
 .plataformas-container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 7rem 2rem 2rem;
-
 }
 
-/* Cards de fintech */
-.card-fintech {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* Card Fintech */
+.fintech-card {
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border: none;
   padding: 1.5rem;
   background: #fff;
 }
 
-/* Título de la plataforma */
-.card-fintech h5 {
+/* Títulos */
+.fintech-card h5 {
   font-weight: bold;
-  color: #007a33; /* Verde para resaltar */
+  color: #007a33;
   margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
-/* Texto y lista */
-.card-fintech p,
-.card-fintech ul {
+/* Texto */
+.fintech-card p {
   font-size: 0.95rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
 }
 
-/* Botón al mismo nivel en todas las tarjetas */
-.card-fintech .btn {
-  margin-top: auto;
-  align-self: center;
-  width: 100%;
-  max-width: 250px;
-}
-
-/* Botón personalizado */
+/* Botón */
 .btn-faq {
   background-color: #007a33;
   color: white;
   font-weight: 600;
   border-radius: 8px;
+  transition: 0.3s;
 }
-
 .btn-faq:hover {
   background-color: #005c26;
+  transform: scale(1.02);
 }
