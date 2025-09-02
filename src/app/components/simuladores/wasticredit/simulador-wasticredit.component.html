@@ -1,42 +1,97 @@
-<div class="simulador-container">
-  <h2>OBTÉN UN 50% DE DESCUENTO EN TU PRIMER PRÉSTAMO</h2>
+<div class="container my-5">
+  <div class="simulador-glass card border-0 shadow-lg rounded-4 overflow-hidden">
+    <div class="card-body p-4">
 
-  <div class="modo-pago">
-    <button class="activo">Pago Único</button>
+      <!-- Título con gradiente -->
+      <h2 class="text-center fw-bold text-gradient mb-4">
+        🚀 Obtén 50% de descuento en tu primer préstamo
+      </h2>
+
+      <!-- Modo de pago -->
+      <div class="d-flex justify-content-center mb-4">
+        <span class="badge rounded-pill bg-success px-4 py-2 fs-6 shadow-sm">
+          Pago Único
+        </span>
+      </div>
+
+      <!-- Slider con botones flotantes -->
+      <label for="monto" class="form-label fw-semibold">💰 Simula tu préstamo</label>
+      <div class="position-relative mb-4">
+        <input 
+          type="range" 
+          class="form-range custom-range"
+          [(ngModel)]="monto"
+          min="300000"
+          max="1000000"
+          step="10000"
+        />
+        <button 
+          class="btn btn-light text-success rounded-circle shadow boton-slider start"
+          (click)="cambiarMonto(-10000)">-</button>
+        <button 
+          class="btn btn-light text-success rounded-circle shadow boton-slider end"
+          (click)="cambiarMonto(10000)">+</button>
+        <div class="text-center mt-3 fs-5 fw-bold text-dark">
+          {{ monto | currency:'COP':'symbol':'1.0-0' }}
+        </div>
+      </div>
+
+      <!-- Plazos con estilo tarjetas -->
+      <div class="d-flex justify-content-center gap-3 mb-4">
+        <div 
+          class="plazo-card" 
+          [class.active]="plazo === 14"
+          (click)="plazo = 14"
+        >
+          <span>14 Días</span>
+        </div>
+        <div 
+          class="plazo-card"
+          [class.active]="plazo === 30"
+          (click)="plazo = 30"
+        >
+          <span>30 Días</span>
+        </div>
+      </div>
+
+      <!-- Detalles como tarjetas -->
+      <div class="row g-3 text-center mb-4">
+        <div class="col-md-6">
+          <div class="detalle-box">
+            <p class="mb-1 text-muted">Cantidad Solicitada</p>
+            <h5 class="fw-bold">{{ monto | currency:'COP' }}</h5>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detalle-box">
+            <p class="mb-1 text-muted">Interés</p>
+            <s class="text-muted small">{{ interesBase | currency:'COP' }}</s>
+            <h6 class="fw-bold text-success">{{ interes | currency:'COP' }}</h6>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detalle-box">
+            <p class="mb-1 text-muted">Firma Electrónica</p>
+            <s class="text-muted small">{{ tarifaFirmaBase | currency:'COP' }}</s>
+            <h6 class="fw-bold text-success">{{ tarifaFirma | currency:'COP' }}</h6>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detalle-box highlight">
+            <p class="fw-bold fs-5 text-gradient">Total a Pagar</p>
+            <h5 class="fw-bold text-gradient">{{ totalPagar | currency:'COP' }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón principal -->
+      <a 
+        class="btn btn-lg w-100 fw-bold text-white gradient-btn shadow-lg border-0 py-3"
+        href="https://wasticredit.co/"
+        target="_blank"
+      >
+        Solicítalo ahora ✨
+      </a>
+    </div>
   </div>
-
-  <label for="monto">Simula tu préstamo</label>
-  <div class="slider-container">
-    <button (click)="cambiarMonto(-10000)">-</button>
-    <input type="range" [(ngModel)]="monto" min="300000" max="1000000" step="10000" />
-    <button (click)="cambiarMonto(10000)">+</button>
-    <span>{{ monto | currency:'COP':'symbol':'1.0-0' }}</span>
-  </div>
-
-  <div class="plazos">
-    <button [class.selected]="plazo === 14" (click)="plazo = 14">14 Días</button>
-    <button [class.selected]="plazo === 30" (click)="plazo = 30">30 Días</button>
-  </div>
-
-  <div class="detalles">
-    <p>Cantidad Solicitada: {{ monto | currency:'COP' }}</p>
-
-    <p>
-      Interés:
-      <s>{{ interesBase | currency:'COP' }}</s>
-      <span class="resaltado">{{ interes | currency:'COP' }}</span>
-    </p>
-
-    <p>
-      Tarifa Firma Electrónica (Opcional):
-      <s>{{ tarifaFirmaBase | currency:'COP' }}</s>
-      <span class="resaltado">{{ tarifaFirma | currency:'COP' }}</span>
-    </p>
-
-    <p><strong>Total a Pagar: {{ totalPagar | currency:'COP' }}</strong></p>
-  </div>
-
-  <a class="solicitar-btn" href="https://wasticredit.co/" target="_blank">
-    Solicítalo ahora
-  </a>
 </div>
