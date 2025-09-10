@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./simulador-doctorpeso.component.css']
 })
 export class SimuladorDoctorpesoComponent {
-  monto = 490000;
+  monto = 200000;
   interesEA = 0.241;
   diasPlazo = 11;
 
@@ -22,32 +22,18 @@ export class SimuladorDoctorpesoComponent {
   get firma(): number {
     if (!this.firmaIncluida) return 0;
     if (this.diasPlazo < 10 || this.diasPlazo > 30) return 0;
-    return 14670 + (this.diasPlazo - 10) * 1170;
+    return 30000 + (this.diasPlazo - 10) * 1050;
   }
 
   get fianza(): number {
-    if (!this.fianzaIncluida) return 0;
-    if (this.diasPlazo < 7 || this.diasPlazo > 30) return 0;
-
-    const montoMin = 100000;
-    const pasoMonto = 10000;
-    const baseFianza100k7dias = 12820;
-    const incrementoDia = 120;
-    const incrementoMonto7dias = 1282;
-    const aumentoIncrementoPorDia = 12;
-
-    const pasosDia = this.diasPlazo - 7;
-    const pasosMonto = Math.floor((this.monto - montoMin) / pasoMonto);
-
-    const basePlazo = baseFianza100k7dias + pasosDia * aumentoIncrementoPorDia;
-    const incrementoPor10k = incrementoMonto7dias + pasosDia * aumentoIncrementoPorDia;
-
-    return Math.round(basePlazo + pasosMonto * incrementoPor10k);
+  if (!this.fianzaIncluida) return 0;
+  // Fianza igual al simulador DoctorPeso: monto * 0.1486
+  return Math.round(this.monto * 0.1486);
   }
 
   get interes(): number {
-    const tasaDiaria = 0.000602;
-    return Math.round(this.monto * tasaDiaria * this.diasPlazo);
+  const tasaDiaria = 0.001305;
+  return Math.round(this.monto * tasaDiaria * this.diasPlazo);
   }
 
   get iva(): number {
