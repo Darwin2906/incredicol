@@ -37,7 +37,7 @@ export class SimuladorYaDineroComponent {
   }
 
   calcular() {
-  this.interes = Math.round(this.monto * 0.00060671 * this.plazo);
+  this.interes = Math.round(this.monto * 0.000612 * this.plazo);
 
   const fianzaBase = 19992;
   const incrementoFianza = 1666;
@@ -58,7 +58,7 @@ export class SimuladorYaDineroComponent {
   this.total = this.monto + this.interes + this.fianza + this.administracion + this.iva + this.express;
 
   const fechaActual = new Date();
-  fechaActual.setDate(fechaActual.getDate() + this.plazo - 1);
+  fechaActual.setDate(fechaActual.getDate() + this.plazo);
   this.fechaPago = fechaActual.toISOString().split('T')[0];
 }
 
