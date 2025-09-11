@@ -171,7 +171,7 @@
 }
 
 .benefit-card:hover .benefit-icon {
-  background: primary-green;
+  background: var(--primary-green);
   transform: scale(1.1);
 }
 
@@ -304,4 +304,97 @@
   .scroll-target {
     scroll-margin-top: 80px;
   }
+}
+
+/* Animación de aparición */
+.section-fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilo de la sección de comentarios */
+.comentarios-section {
+  background: var(--light-gray);
+  padding: 4rem 0;
+}
+
+.comentarios-section h2.section-title {
+  color: var(--dark-green);
+}
+
+.comentarios-section h2.section-title::after {
+  background-color: var(--primary-green);
+}
+
+/* Estilo para la tarjeta del formulario de comentarios */
+.comentario-form-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-top: 4px solid var(--primary-green);
+}
+
+/* Estilo para la tarjeta de cada comentario */
+.comentario-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-left: 3px solid var(--primary-green);
+}
+
+.comentario-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Textarea */
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+textarea.form-control:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 0.2rem rgba(51, 202, 46, 0.25);
+}
+
+/* Botones */
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-outline-light {
+    border-color: white;
+    color: white;
+}
+
+.btn-outline-light:hover {
+    background-color: white;
+    color: var(--dark-green);
+}
+
+.cta-section .btn-outline-dark {
+    border-color: white;
+    color: white;
+}
+.cta-section .btn-outline-dark:hover {
+    background-color: white;
+    color: var(--dark-green);
 }
