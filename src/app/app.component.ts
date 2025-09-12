@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterModule } from '@angular/router'; // 👈 IMPORTANTE
+import { RouterOutlet, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,4 +11,16 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'incredicol';
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const navbarCollapse = document.getElementById('navbarNav');
+        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+          // Cierra el menú colapsable de Bootstrap
+          navbarCollapse.classList.remove('show');
+        }
+      }
+    });
+  }
 }
