@@ -10,6 +10,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  closeNavbar() {
+    const navbarCollapse = document.getElementById('navbarNav');
+    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+      navbarCollapse.classList.remove('show');
+    }
+  }
   title = 'incredicol';
 
   constructor(private router: Router) {
