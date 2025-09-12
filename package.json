@@ -2,12 +2,14 @@
   "name": "incredicol",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:incredicol": "node dist/incredicol/server/server.mjs"
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "postbuild": "copy src\\_redirects dist\\incredicol\\browser\\_redirects",
+  "build:netlify": "ng build --configuration=production && npm run postbuild",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "serve:ssr:incredicol": "node dist/incredicol/server/server.mjs"
   },
   "private": true,
   "dependencies": {
