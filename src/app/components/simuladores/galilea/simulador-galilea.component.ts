@@ -74,30 +74,27 @@ export class SimuladorGalileaComponent implements OnInit, OnDestroy {
   }
 
   calcularFechasBotones() {
-  const hoy = new Date();
+    const hoy = new Date();
 
-  // Primera fecha: 30 del mes actual
-  const dia30MesActual = new Date(hoy.getFullYear(), hoy.getMonth(), 30);
-  this.primeraFechaBtn = this.ajustarFechaLaborable(dia30MesActual);
-  this.primeraFechaDias = Math.ceil(
-    (this.primeraFechaBtn.getTime() - hoy.getTime()) / (1000 * 3600 * 24)
-  );
+    // Primera fecha: 30 del mes actual
+    const dia30MesActual = new Date(hoy.getFullYear(), hoy.getMonth(), 30);
+    this.primeraFechaBtn = this.ajustarFechaLaborable(dia30MesActual);
+    this.primeraFechaDias = Math.ceil(
+      (this.primeraFechaBtn.getTime() - hoy.getTime()) / (1000 * 3600 * 24)
+    );
 
-  // Segunda fecha: 15 del mes siguiente
-  const dia15MesSiguiente = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 15);
-  this.segundaFechaBtn = this.ajustarFechaLaborable(dia15MesSiguiente);
-  this.segundaFechaDias = Math.ceil(
-    (this.segundaFechaBtn.getTime() - hoy.getTime()) / (1000 * 3600 * 24)
-  );
+    // Segunda fecha: 15 del mes siguiente
+    const dia15MesSiguiente = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 15);
+    this.segundaFechaBtn = this.ajustarFechaLaborable(dia15MesSiguiente);
+    this.segundaFechaDias = Math.ceil(
+      (this.segundaFechaBtn.getTime() - hoy.getTime()) / (1000 * 3600 * 24)
+    );
 
-  // 👉 Siempre selecciona la primera fecha como predeterminada
-  this.fechaPago = this.primeraFechaBtn.toISOString().split('T')[0];
-  this.diasVencimiento = this.primeraFechaDias;
-  this.fechaPrimeraCuota = this.primeraFechaBtn;
-}
-
-
-
+    // 👉 Siempre selecciona la primera fecha como predeterminada
+    this.fechaPago = this.primeraFechaBtn.toISOString().split('T')[0];
+    this.diasVencimiento = this.primeraFechaDias;
+    this.fechaPrimeraCuota = this.primeraFechaBtn;
+  }
 
   ajustarFechaLaborable(fecha: Date): Date {
     const diaSemana = fecha.getDay();
@@ -124,13 +121,38 @@ export class SimuladorGalileaComponent implements OnInit, OnDestroy {
     return fecha.toLocaleDateString('es-CO');
   }
 
+  // 🔹 Nueva función de costo de firma
   calcularCostoFirma(): number {
-  if (this.monto < 200000) return 0;
+    if (!this.firmaElectronica) return 0;
+    if (this.monto < 200000) return 0;
 
-  const porcentaje = (-9.46e-8 * this.monto) + 0.2365;
+    let costoBase = 0;
 
-  return Math.round(this.monto * porcentaje);
-}
+    // Caso: plazo de 9 días
+    if (this.diasVencimiento === 9) {
+      if (this.monto <= 880000) {
+        const bloques = Math.floor((this.monto - 200000) / 10000);
+        costoBase = 50750 + (bloques * 1400);
+      } else {
+        costoBase = 145000;
+      }
+    } 
+    // Caso: plazo de 24 días
+    else if (this.diasVencimiento === 24) {
+      if (this.monto <= 720000) {
+        const bloques = Math.floor((this.monto - 200000) / 10000);
+        costoBase = 72500 + (bloques * 1400);
+      } else {
+        costoBase = 145000;
+      }
+    } 
+    // Si no aplica ninguna regla, que se quede en 0
+    else {
+      costoBase = 0;
+    }
+
+    return costoBase;
+  }
 
   calcularTodo(): void {
     if (this.monto < 100000) this.monto = 100000;
@@ -140,7 +162,7 @@ export class SimuladorGalileaComponent implements OnInit, OnDestroy {
       this.monto * this.tasaDiaria * this.diasVencimiento
     );
 
-    this.costoFirma = this.firmaElectronica ? this.calcularCostoFirma() : 0;
+    this.costoFirma = this.calcularCostoFirma();
 
     this.totalPagar = this.monto + this.interes + this.costoFirma;
   }
