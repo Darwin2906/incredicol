@@ -168,6 +168,11 @@ export class SimuladorSolventaComponent implements OnInit {
       }
     ];
 
+    // 👇 Sobrescribes los días calculados
+this.paymentDateOptions[0].daysUntil = 23;
+this.paymentDateOptions[1].daysUntil = 39;
+
+this.daysUntil = this.paymentDateOptions[0].daysUntil;
     this.daysUntil = this.paymentDateOptions[0].daysUntil;
   }
 
@@ -180,51 +185,49 @@ export class SimuladorSolventaComponent implements OnInit {
     }
   }
 
-  calculateFianzaForScore(score: 'bajo' | 'alto', monto: number, dias: number): number {
+  // --- Nueva versión: fianza según monto y score (siempre aplica) ---
+  calculateFianzaForScore(score: 'bajo' | 'alto', monto: number): number {
     const montoBase = 150000;
     const paso = 50000;
 
     if (monto < montoBase) return 0;
 
-    const is25 = dias >= 24 && dias <= 26;
-    const is41 = dias >= 40 && dias <= 42;
-
-    if (!is25 && !is41) return 0;
-
     const pasos = Math.max(0, Math.floor((monto - montoBase) / paso));
 
     if (score === 'bajo') {
-      const base = 19635;
-      const incremento = 6545;
+      const base = 19635;   // valor inicial bajo
+      const incremento = 6545; // incremento bajo
       return Math.round(base + pasos * incremento);
     } else {
-      const base = 6248;
-      const incremento = 2082;
+      const base = 6248;    // valor inicial alto
+      const incremento = 2082; // incremento alto
       return Math.round(base + pasos * incremento);
     }
   }
 
   calculateCosts() {
     const amount = this.loanForm.value.amount;
-    const installments = this.loanForm.value.installments;
+  const installments = this.loanForm.value.installments;
 
-    this.lowCreditCost = this.calculateCuota(amount, installments, 'bajo');
-    this.highCreditCost = this.calculateCuota(amount, installments, 'alto');
+  this.lowCreditCost = this.calculateCuota(amount, installments, 'bajo');
+  this.highCreditCost = this.calculateCuota(amount, installments, 'alto');
 
-    this.lowTotalCost = installments === 1 ? this.lowCreditCost : this.lowCreditCost * installments;
-    this.highTotalCost = installments === 1 ? this.highCreditCost : this.highCreditCost * installments;
+  this.lowTotalCost = installments === 1 ? this.lowCreditCost : this.lowCreditCost * installments;
+  this.highTotalCost = installments === 1 ? this.highCreditCost : this.highCreditCost * installments;
 
-    // --- Nuevo: interés aproximado guardado en propiedad ---
-    this.interesApprox = Math.round(amount * this.tasaDiaria * this.daysUntil);
+// Interés base con capitalización compuesta (sin factor extra)
+const interesBase = amount * (Math.pow(1 + this.tasaEA, this.daysUntil / 365) - 1);
+this.interesApprox = Math.round(interesBase);
 
-    this.lowFianza = this.calculateFianzaForScore('bajo', amount, this.daysUntil);
-    this.highFianza = this.calculateFianzaForScore('alto', amount, this.daysUntil);
+
+  // --- Fianzas ---
+    this.lowFianza = this.calculateFianzaForScore('bajo', amount);
+    this.highFianza = this.calculateFianzaForScore('alto', amount);
 
     const firma = this.firmaElectronica;
 
-    this.lowTotalWithExtras = this.lowTotalCost + this.lowFianza + firma;
-    this.highTotalWithExtras = this.highTotalCost + this.highFianza + firma;
-
+    this.lowTotalWithExtras = amount + this.interesApprox + this.lowFianza + firma;
+    this.highTotalWithExtras = amount + this.interesApprox + this.highFianza + firma;
     this.showTotal = installments === 1;
   }
 

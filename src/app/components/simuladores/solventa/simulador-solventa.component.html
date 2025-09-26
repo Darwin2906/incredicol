@@ -55,11 +55,11 @@
         <h3 class="results-title">Según tu puntaje crediticio pagarás:</h3>
         <div class="cost-results">
           <div class="cost-result low-cost">
-            <div class="cost-amount">{{ formatCurrency(showTotal ? lowTotalCost : lowCreditCost) }}</div>
+            <div class="cost-amount">{{ formatCurrency(showTotal ? lowTotalWithExtras : lowCreditCost) }}</div>
             <div class="cost-label">{{ showTotal ? 'Total a pagar' : 'Por cuota' }}</div>
           </div>
           <div class="cost-result high-cost">
-            <div class="cost-amount">{{ formatCurrency(showTotal ? highTotalCost : highCreditCost) }}</div>
+            <div class="cost-amount">{{ formatCurrency(showTotal ? highTotalWithExtras : highCreditCost) }}</div>
             <div class="cost-label">{{ showTotal ? 'Total a pagar' : 'Por cuota' }}</div>
           </div>
         </div>
