@@ -129,7 +129,7 @@ export class SimuladorGalileaComponent implements OnInit, OnDestroy {
     let costoBase = 0;
 
     // Caso: plazo de 9 días
-    if (this.diasVencimiento === 9) {
+    if (this.diasVencimiento === 12) {
       if (this.monto <= 880000) {
         const bloques = Math.floor((this.monto - 200000) / 10000);
         costoBase = 50750 + (bloques * 1400);
@@ -138,7 +138,7 @@ export class SimuladorGalileaComponent implements OnInit, OnDestroy {
       }
     } 
     // Caso: plazo de 24 días
-    else if (this.diasVencimiento === 24) {
+    else if (this.diasVencimiento === 27) {
       if (this.monto <= 720000) {
         const bloques = Math.floor((this.monto - 200000) / 10000);
         costoBase = 72500 + (bloques * 1400);

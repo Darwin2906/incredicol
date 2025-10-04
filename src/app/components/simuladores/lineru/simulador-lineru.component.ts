@@ -14,7 +14,7 @@ export class LineruComponent {
   monto: number = 300000;
   plazo: number = 30;
 
-  tasaEA: number = 0.2507; // 25.01% EA
+  tasaEA: number = 0.2416; // 24.16% EA
   tasaSeguro: number = 0.00449;
   tasaIVA: number = 0.19;
 

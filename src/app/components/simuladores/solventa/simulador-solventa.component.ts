@@ -33,8 +33,8 @@ export class SimuladorSolventaComponent implements OnInit {
   firmaElectronica = 89579;
 
   // Tasa EA y tasa diaria fija solicitada
-  tasaEA = 0.2501; // EA única
-  tasaDiaria = 0.0006118; // tasa diaria fija proporcionada
+  tasaEA = 0.2436; // EA única
+  tasaDiaria = 0.0006058; // tasa diaria fija proporcionada
 
   // Estructuras de tabla existentes
   baseRates: any = {
@@ -169,8 +169,8 @@ export class SimuladorSolventaComponent implements OnInit {
     ];
 
     // 👇 Sobrescribes los días calculados
-this.paymentDateOptions[0].daysUntil = 23;
-this.paymentDateOptions[1].daysUntil = 39;
+this.paymentDateOptions[0].daysUntil = 29;
+this.paymentDateOptions[1].daysUntil = 43;
 
 this.daysUntil = this.paymentDateOptions[0].daysUntil;
     this.daysUntil = this.paymentDateOptions[0].daysUntil;
