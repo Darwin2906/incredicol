@@ -21,8 +21,8 @@ export class SimuladorGalileaComponent implements OnInit, OnDestroy {
   interes: number = 0;
   costoFirma: number = 0;
   totalPagar: number = 0;
-  tasaEA: number = 0.2478; // Tasa EA del 24.78% (valor de referencia)
-  tasaDiaria: number = 0.00062070; // Tasa diaria única para todos los plazos
+  tasaEA: number = 0.2436; // Tasa EA del 24.36% (valor de referencia)
+  tasaDiaria: number = 0.0006058; // Tasa diaria única para todos los plazos
 
   primeraFechaBtn: Date = new Date();
   segundaFechaBtn: Date = new Date();
