@@ -1,0 +1,49 @@
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card shadow-lg p-4 doctorpeso-card">
+        <h2 class="text-success text-center mb-4">Solicita tu crédito Quipu</h2>
+        <form #form="ngForm" (ngSubmit)="enviarSolicitud()">
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-success">Nombres</label>
+                <input type="text" class="form-control" name="nombre" [(ngModel)]="solicitud.nombre" required pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-success">Apellidos</label>
+                <input type="text" class="form-control" name="apellidos" [(ngModel)]="solicitud.apellidos" required pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-success">Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="solicitud.email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-success">Monto solicitado</label>
+                <input type="number" class="form-control" name="monto" [(ngModel)]="solicitud.monto" required min="100000" max="7000000" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-success">Comentario</label>
+                <textarea class="form-control" name="comentario" [(ngModel)]="solicitud.comentario" rows="2"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-success">Puntuación</label>
+                <div class="star-rating">
+                    <ng-container *ngFor="let star of [1,2,3,4,5]">
+                        <span class="star-container" style="position:relative;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" style="cursor:pointer;" (click)="onStarClick($event, star)" (mousemove)="onStarMouseMove($event, star)" (mouseleave)="hoveredStar = null">
+                                <defs>
+                                    <linearGradient id="halfStar{{star}}">
+                                        <stop [attr.offset]="getStarGradientOffset(star)" stop-color="#FFD700"/>
+                                        <stop [attr.offset]="getStarGradientOffset(star)" stop-color="#ccc"/>
+                                    </linearGradient>
+                                </defs>
+                                <polygon points="12,2 15,9 22,9.3 17,14.1 18.5,21 12,17.5 5.5,21 7,14.1 2,9.3 9,9"
+                                    [attr.fill]="getStarFill(star)" stroke="#FFD700" stroke-width="1"/>
+                            </svg>
+                        </span>
+                    </ng-container>
+                </div>
+            </div>
+            <button class="btn btn-success w-100 fw-bold" [disabled]="form.invalid || enviando">Enviar solicitud</button>
+        </form>
+        <div *ngIf="mensaje" class="alert alert-success mt-3 text-center">{{ mensaje }}</div>
+        <div *ngIf="error" class="alert alert-danger mt-3 text-center">{{ error }}</div>
+    </div>
+</div>

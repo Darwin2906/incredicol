@@ -1,0 +1,124 @@
+/* Botones alineados y del mismo tamaño */
+.acciones-botones {
+  display: flex;
+  gap: 16px;
+  margin: 1.5rem;
+}
+.acciones-botones .btn-solicitud {
+  flex: 1;
+  margin: 0;
+}
+.simulador-container {
+  max-width: 800px;
+  margin: 1.5rem auto;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  border: 2px solid #33ca2e;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* Encabezado */
+.simulador-header {
+  background: #33ca2e;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.simulador-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Body en dos columnas */
+.simulador-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Sliders */
+.slider-section label {
+  font-weight: 600;
+}
+.slider-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #33ca2e;
+}
+input[type="range"] {
+  width: 100%;
+  accent-color: #33ca2e;
+}
+.slider-minmax {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Valores */
+.valores-pagar h3 {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #001f3f;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 4px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.item:last-child { border-bottom: none; }
+.checkbox-item input {
+  margin-left: 8px;
+  transform: scale(1.1);
+  accent-color: #33ca2e;
+}
+
+/* Pago final */
+.pago-final {
+  background: #e6f3f7;
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+.titulo-pago {
+  font-weight: bold;
+  color: #001f3f;
+  margin-bottom: 8px;
+}
+.pago-final strong {
+  color: #001f3f;
+  font-size: 1.1rem;
+}
+
+/* Botón */
+.btn-solicitud {
+  display: block;
+  margin: 1rem;
+  text-align: center;
+  background: #33ca2e;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-solicitud:hover { background: #28a428; transform: scale(1.02); }
+.btn-solicitud:active { transform: scale(0.98); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .simulador-body {
+    grid-template-columns: 1fr;
+  }
+}

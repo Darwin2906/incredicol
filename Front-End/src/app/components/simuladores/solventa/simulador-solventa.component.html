@@ -1,0 +1,128 @@
+<div class="simulador-container">
+  <div class="card-body">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-container">
+        <div class="logo">S</div>
+        <h1 class="title">Simulador Solventa</h1>
+      </div>
+      <p class="subtitle">¿Cuánto dinero necesitas?</p>
+    </div>
+
+    <!-- Formulario -->
+    <form [formGroup]="loanForm" class="loan-form">
+      <!-- Monto -->
+      <div class="amount-section">
+        <div class="amount-display">
+          {{ formatCurrency(loanForm.value.amount) }}
+        </div>
+        <input type="range" formControlName="amount" [min]="minAmount" [max]="maxAmount" [step]="stepAmount"
+               class="amount-slider">
+        <div class="amount-limits">
+          <span>{{ formatCurrency(minAmount) }}</span>
+          <span>{{ formatCurrency(maxAmount) }}</span>
+        </div>
+      </div>
+
+      <!-- Cuotas -->
+      <h2 class="section-title">¿En cuántas cuotas?</h2>
+      <div class="installments-section">
+        <div class="installment-options">
+          <div *ngFor="let inst of installments" class="installment-option">
+            <input type="radio" [id]="'inst'+inst" formControlName="installments" [value]="inst">
+            <label [for]="'inst'+inst">
+              {{ inst }} {{ inst === 1 ? 'cuota' : 'cuotas' }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fecha de pago -->
+      <h2 class="section-title">¿Cuándo prefieres pagarlo?</h2>
+      <div class="date-options">
+        <div *ngFor="let option of paymentDateOptions"
+             [class.selected]="selectedDateId === option.id"
+             (click)="selectDateOption(option.id)"
+             class="date-option">
+          <div class="day-name">{{ option.dayName }}</div>
+          <div class="date-value">{{ option.formattedDate }}</div>
+          <div class="days-until">Vence en {{ option.daysUntil }} días</div>
+        </div>
+      </div>
+
+      <!-- Resultados principales -->
+      <div class="results-section">
+        <h3 class="results-title">Según tu puntaje crediticio pagarás:</h3>
+        <div class="cost-results">
+          <div class="cost-result low-cost">
+            <div class="cost-amount">{{ formatCurrency(showTotal ? lowTotalWithExtras : lowCreditCost) }}</div>
+            <div class="cost-label">{{ showTotal ? 'Total a pagar' : 'Por cuota' }}</div>
+          </div>
+          <div class="cost-result high-cost">
+            <div class="cost-amount">{{ formatCurrency(showTotal ? highTotalWithExtras : highCreditCost) }}</div>
+            <div class="cost-label">{{ showTotal ? 'Total a pagar' : 'Por cuota' }}</div>
+          </div>
+        </div>
+        <div class="credit-types">
+          <span>Bajo puntaje</span>
+          <span>Alto puntaje</span>
+        </div>
+      </div>
+
+      <!-- Detalle de costos -->
+      <div class="cost-details">
+        <h3>Condiciones transparentes</h3>
+
+        <!-- Monto -->
+        <div class="detail-item">
+          <span>Préstamo valor a percibir:</span>
+          <span>{{ formatCurrency(loanForm.value.amount) }}</span>
+        </div>
+
+        <!-- Tasa EA -->
+        <div class="detail-item">
+          <span>Interés T.E.A.:</span>
+          <span>{{ (tasaEA * 100) | number:'1.2-2' }}%</span>
+        </div>
+
+        <!-- Interés aproximado en dinero (ajustado) -->
+        <div class="detail-item">
+          <span>Interés aproximado:</span>
+          <span>{{ formatCurrency((loanForm.value.amount || 0) * (tasaDiaria || 0) * (daysUntil || 0)) }}</span>
+        </div>
+
+        <!-- Fianza -->
+        <div class="detail-item">
+          <span>Fondos de Garantía / Fianza:</span>
+          <span>Bajo puntaje: {{ formatCurrency(lowFianza) }} / Alto puntaje: {{ formatCurrency(highFianza) }}</span>
+        </div>
+
+        <!-- Firma electrónica -->
+        <div class="detail-item">
+          <span>Firma Electrónica:</span>
+          <span>{{ formatCurrency(firmaElectronica) }}</span>
+        </div>
+
+        <!-- Totales con fianza y firma -->
+        <div class="detail-item total-with-extras">
+          <span>Total con fianza y firma:</span>
+          <span>Bajo puntaje: {{ formatCurrency(lowTotalWithExtras) }} / Alto puntaje: {{ formatCurrency(highTotalWithExtras) }}</span>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <button type="button" (click)="submitLoan()" class="btn-primary">
+        Comparar con Solventa
+      </button>
+      <p></p>
+      <button type="button" (click)="irAlFormulario()" class="btn-primary">
+        Seguir con el proceso
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <div class="footer-note">
+      Préstamos de dinero en línea desde {{ formatCurrency(150000) }} y hasta {{ formatCurrency(5000000) }} a 6 cuotas.
+    </div>
+  </div>
+</div>

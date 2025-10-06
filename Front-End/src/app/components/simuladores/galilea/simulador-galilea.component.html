@@ -1,0 +1,94 @@
+<div class="simulador-container">
+  <h2>Calcula tu crédito</h2>
+  <p class="text-limite-verde">Tu primera vez hasta $500.000</p>
+
+  <div class="horizontal-layout">
+    <div class="monto-section">
+      <label for="monto">Elige el monto</label>
+      <span class="monto-elegido">
+        {{ monto | currency : "COP" : "symbol" : "1.0-0" }}
+      </span>
+      <input
+        type="range"
+        id="monto"
+        min="200000"
+        max="1500000"
+        step="10000"
+        [(ngModel)]="monto"
+        (input)="calcularTodo()"
+      />
+    </div>
+
+    <div class="fechas-section">
+      <p class="subtitulo-fecha">Elige la fecha de pago</p>
+      <div class="fecha-opciones">
+        <button 
+          class="fecha-btn" 
+          [class.selected]="diasVencimiento === primeraFechaDias" 
+          (click)="seleccionarFecha(primeraFechaDias, primeraFechaBtn)">
+          {{ primeraFechaBtn | date:'dd/MM/yyyy' }}
+          <span *ngIf="diasVencimiento === primeraFechaDias" class="check-icon">✔</span>
+          <small>Vence en {{ primeraFechaDias }} días</small>
+        </button>
+
+        <button 
+          class="fecha-btn" 
+          [class.selected]="diasVencimiento === segundaFechaDias" 
+          (click)="seleccionarFecha(segundaFechaDias, segundaFechaBtn)">
+          {{ segundaFechaBtn | date:'dd/MM/yyyy' }}
+          <span *ngIf="diasVencimiento === segundaFechaDias" class="check-icon">✔</span>
+          <small>Vence en {{ segundaFechaDias }} días</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="costos tarjeta">
+    <h4>Costos fijos</h4>
+    <div class="detalle">
+      <span>Monto solicitado</span>
+      <span>{{ monto | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+    <div class="detalle">
+      <span>Interés corriente ({{ tasaEA * 100 | number : "1.2-2" }}% E.A)</span>
+      <span>{{ interes | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+  </div>
+
+  <div class="costos tarjeta">
+    <h4>Costo opcional</h4>
+    <div class="detalle">
+      <label class="checkbox-label">
+        <input
+          type="checkbox"
+          [(ngModel)]="firmaElectronica"
+          (change)="calcularTodo()"
+        />
+        Firma electrónica (con descuento)
+      </label>
+      <span>{{ costoFirma | currency : "COP" : "symbol" : "1.0-0" }}</span>
+    </div>
+  </div>
+
+  <div class="total tarjeta">
+    <div class="detalle">
+      <strong>Total a pagar</strong>
+      <strong>{{ totalPagar | currency : "COP" : "symbol" : "1.0-0" }}</strong>
+    </div>
+    <div class="detalle">
+      <span>Fecha de tu primera cuota</span>
+      <span>{{ fechaPrimeraCuota | date : "dd/MM/yyyy" }}</span>
+    </div>
+  </div>
+
+  <button class="btn-solicitar" (click)="simuladorOriginal()" target="_blank" rel="noopener noreferrer">
+    Comparar en Galilea
+  </button>
+<p></p>
+  <button class="btn-solicitar" (click)="irAlFormulario()" target="_blank" rel="noopener noreferrer">
+      Seguir con el proceso
+    </button>
+
+  </div>
+
+

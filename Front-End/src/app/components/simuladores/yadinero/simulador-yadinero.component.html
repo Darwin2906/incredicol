@@ -1,0 +1,104 @@
+<div class="simulador-container">
+  <!-- Encabezado -->
+  <div class="simulador-header">
+    <h2>💰 Simulador de crédito</h2>
+    <span>Pago único</span>
+  </div>
+
+  <div class="simulador-body">
+    <!-- Columna izquierda: sliders -->
+    <div class="sliders">
+      <!-- Monto -->
+      <div class="slider-section">
+        <label>¿Cuánto dinero necesitas?</label>
+        <div class="slider-value">
+          {{ monto | currency : "COP" : "symbol" : "1.0-0" }}
+        </div>
+        <input
+          type="range"
+          [min]="minMonto"
+          [max]="maxMonto"
+          step="10000"
+          [(ngModel)]="monto"
+          (input)="calcular()"
+        />
+        <div class="slider-minmax">
+          <span>{{ minMonto | currency : "COP" }}</span>
+          <span>{{ maxMonto | currency : "COP" }}</span>
+        </div>
+      </div>
+
+      <!-- Plazo -->
+      <div class="slider-section">
+        <label>¿Cuándo puedes pagarlo?</label>
+        <div class="slider-value">{{ plazo }} días</div>
+        <input
+          type="range"
+          [min]="minPlazo"
+          [max]="maxPlazo"
+          step="1"
+          [(ngModel)]="plazo"
+          (input)="calcular()"
+        />
+        <div class="slider-minmax">
+          <span>{{ minPlazo }} días</span>
+          <span>{{ maxPlazo }} días</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: valores -->
+    <div class="valores-pagar">
+      <h3>Resumen</h3>
+      <div class="item">
+        <span>Solicitado</span>
+        <span>{{ monto | currency : "COP" }}</span>
+      </div>
+      <div class="item">
+        <span>Interés</span>
+        <span>{{ interes | currency : "COP" }}</span>
+      </div>
+      <div class="item">
+        <span>FIANZA + IVA</span>
+        <span>{{ fianza | currency : "COP" }}</span>
+      </div>
+      <div class="item">
+        <span>Administración</span>
+        <span>{{ administracion | currency : "COP" }}</span>
+      </div>
+      <div class="item">
+        <span>IVA</span>
+        <span>{{ iva | currency : "COP" }}</span>
+      </div>
+
+      <div class="item checkbox-item">
+        <span>Yadinero Express</span>
+        <input type="checkbox" (change)="toggleExpress()" />
+        <span>{{ express | currency : "COP" }}</span>
+      </div>
+      <small>Interés moratorio 1.8885%</small>
+    </div>
+  </div>
+
+  <!-- Pago final -->
+  <div class="pago-final">
+    <span class="titulo-pago">Paga tu crédito así</span>
+    <div>
+      <span>Fecha de pago</span>
+      <strong>{{ fechaPago }}</strong>
+    </div>
+    <div>
+      <span>Total a pagar</span>
+      <strong>{{ total | currency : "COP" }}</strong>
+    </div>
+  </div>
+
+  <div class="acciones-botones">
+    <button class="btn-solicitud" (click)="irAYadinero()">
+      Comparar en YaDinero
+    </button>
+    <button class="btn-solicitud" (click)="irAlFormulario()">
+      Seguir con el proceso
+    </button>
+  </div>
+</div>

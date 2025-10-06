@@ -1,0 +1,60 @@
+/* Estilos personalizados para el formulario Doctor Peso */
+.card {
+	border-radius: 1.2rem;
+	border: none;
+}
+.form-label {
+	font-size: 1.1rem;
+}
+.form-control, .form-select {
+	border-radius: 0.7rem;
+	font-size: 1.05rem;
+}
+.btn-success {
+	background-color: #4caf50;
+	border: none;
+}
+.btn-success:disabled {
+	background-color: #a5d6a7;
+}
+.alert-success {
+	background-color: #d0f5d8;
+	color: #256029;
+	border: none;
+}
+.alert-danger {
+	background-color: #ffd6d6;
+	color: #a94442;
+	border: none;
+}
+.doctorpeso-card {
+    max-width: 480px;
+    margin: 0 auto;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(76,175,80,0.15);
+    background: linear-gradient(135deg, #f8fff8 80%, #e8f5e9 100%);
+}
+
+.star-rating {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.star-container {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+}
+.star-rating span {
+    transition: color 0.2s;
+    font-size: 2rem;
+}
+.star-filled {
+    color: #FFD700 !important;
+    text-shadow: 0 0 6px #FFD70099;
+}
+.star-empty {
+    color: #ccc !important;
+}

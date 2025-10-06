@@ -1,0 +1,80 @@
+<div class="simulador-container">
+  <h2>Simulador de Crédito - Rapicredit</h2>
+
+  <div class="simulador-body">
+    <!-- Columna izquierda -->
+    <div class="parametros">
+      <!-- Monto -->
+      <div class="form-group">
+        <label for="monto">
+          Monto solicitado:
+          <span class="tooltip-container">
+            <i class="icono-info">i</i>
+            <span class="tooltip-text">
+              Si es tu primer crédito el monto máximo que te podemos otorgar es de $200.000.
+            </span>
+          </span>
+        </label>
+        <input
+          type="range"
+          id="monto"
+          [(ngModel)]="monto"
+          min="100000"
+          max="1000000"
+          step="10000"
+          (input)="calcularPrestamo()"
+        />
+        <div>{{ monto | currency: 'COP' }}</div>
+      </div>
+
+      <!-- Plazo -->
+      <div class="form-group">
+        <label for="plazo">Plazo (días):</label>
+        <select id="plazo" [(ngModel)]="plazo" (change)="calcularPrestamo()">
+          <option *ngFor="let dia of opcionesPlazo" [value]="dia">{{ dia }} días</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="resultados">
+      <table>
+        <tr>
+          <th>Concepto</th>
+          <th>Valor</th>
+        </tr>
+        <tr class="subtitulo">
+          <td colspan="2">Costos Fijos</td>
+        </tr>
+        <tr>
+          <td>Monto solicitado</td>
+          <td>{{ monto | currency: 'COP' }}</td>
+        </tr>
+        <tr>
+          <td>Interés corriente (23% EA)</td>
+          <td>{{ interes | currency: 'COP' }}</td>
+        </tr>
+        <tr class="subtitulo">
+          <td colspan="2">Costos Opcionales</td>
+        </tr>
+        <tr>
+          <td>Aval</td>
+          <td>{{ aval | currency: 'COP' }}</td>
+        </tr>
+        <tr>
+          <td>Firma electrónica</td>
+          <td>{{ firmaElectronica | currency: 'COP' }}</td>
+        </tr>
+        <tr class="total">
+          <td>Total</td>
+          <td>{{ pagoTotal | currency: 'COP' }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="acciones">
+    <button class="btn-externo" (click)="irArapicredit()">Ir a Rapicredit</button>
+    <button class="btn-externo" (click)="irAlFormulario()">Seguir con el proceso</button>
+  </div>
+</div>
