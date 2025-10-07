@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: incredicol-backend
+    env: node
+    plan: free
+    region: oregon  # Puedes cambiar a us-east, europe, etc.
+    buildCommand: cd Back-End && npm install
+    startCommand: cd Back-End && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Agrega aquí otras variables si necesitas:
+      # - key: MONGODB_URI
+      #   value: tu_url_de_mongodb
