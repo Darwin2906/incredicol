@@ -7,7 +7,8 @@ const app = express();
 // Configuración de CORS para producción
 app.use(cors({
   origin: [
-    'https://incredicol.netlify.app', // Reemplaza con tu URL real de Netlify
+    'https://incredicol.netlify.app',
+    'https://incredicol.netlify.app/', // Reemplaza con tu URL real de Netlify
     'http://localhost:4200',
     'http://localhost:3000'
   ],
