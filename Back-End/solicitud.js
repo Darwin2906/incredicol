@@ -25,8 +25,8 @@ const solicitudSchema = new mongoose.Schema({
   monto: { 
     type: Number, 
     required: [true, 'El monto es obligatorio'],
-    min: [1000, 'El monto mínimo es $1,000'],
-    max: [1000000, 'El monto máximo es $1,000,000']
+    min: [100000, 'El monto mínimo es $100,000'],
+    max: [7000000, 'El monto máximo es $7,000,000']
   },
   comentario: { 
     type: String,
