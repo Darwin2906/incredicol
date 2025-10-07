@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://incredicol-backend.onrender.com' // Valor directo como fallback
+  apiUrl: 'https://incredicol-backend.onrender.com'
 };

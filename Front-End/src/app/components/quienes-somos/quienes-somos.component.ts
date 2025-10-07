@@ -22,11 +22,11 @@ export class QuienesSomosComponent implements OnInit {
   solicitudes: Solicitud[] = [];
   nuevoComentario: string = '';
   puntuacionSeleccionada: number = 5;
-
-  // Propiedades para el nuevo comentario
   nombre: string = '';
   apellidos: string = '';
-comentarios: any;
+  comentarios: any;
+  cargando: boolean = false;
+  error: string = '';
 
   constructor(
     private router: Router,
@@ -41,10 +41,8 @@ comentarios: any;
     }
   }
 
-  // IntersectionObserver que anima solo la primera vez
   initIntersectionObserver(): void {
     const sections = document.querySelectorAll('.section-fade');
-
     const options = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -63,31 +61,63 @@ comentarios: any;
     sections.forEach(section => observer.observe(section));
   }
 
-  // Cargar comentarios desde la base de datos
+  // ✅ MÉTODO COMPLETAMENTE CORREGIDO
   cargarComentariosBD(): void {
+    this.cargando = true;
+    this.error = '';
+    
     this.solicitudService.listarSolicitudes().subscribe({
-      next: (data: any[]) => {
-        console.log('Datos recibidos:', data); // Para debug
-        this.solicitudes = data
-          .filter(solicitud => solicitud.comentario && solicitud.puntuacion) // Filtrar solo con comentario y puntuación
-          .map(solicitud => ({
-            nombre: solicitud.nombre,
-            apellidos: solicitud.apellidos,
-            comentario: solicitud.comentario,
-            puntuacion: solicitud.puntuacion
-          }))
-          .sort((a, b) => b.puntuacion - a.puntuacion);
+      next: (solicitudesArray: any[]) => {
+        console.log('✅ Array recibido del servicio:', solicitudesArray);
+        this.cargando = false;
+        
+        // VERIFICACIÓN EXTRA DE SEGURIDAD
+        if (!Array.isArray(solicitudesArray)) {
+          console.error('❌ El servicio no devolvió un array:', solicitudesArray);
+          this.solicitudes = [];
+          this.error = 'Error al cargar los comentarios';
+          return;
+        }
+
+        try {
+          this.solicitudes = solicitudesArray
+            .filter((solicitud: any) => {
+              // Filtro SEGURO con verificaciones
+              const tieneComentario = solicitud && 
+                                    solicitud.comentario && 
+                                    solicitud.comentario.toString().trim() !== '';
+              const tienePuntuacion = solicitud && 
+                                    solicitud.puntuacion !== undefined && 
+                                    solicitud.puntuacion !== null;
+              return tieneComentario && tienePuntuacion;
+            })
+            .map((solicitud: any) => ({
+              nombre: solicitud.nombre || 'Anónimo',
+              apellidos: solicitud.apellidos || '',
+              comentario: solicitud.comentario,
+              puntuacion: solicitud.puntuacion
+            }))
+            .sort((a, b) => b.puntuacion - a.puntuacion);
+
+          console.log('🎉 Comentarios cargados exitosamente:', this.solicitudes.length);
+        } catch (error) {
+          console.error('💥 Error procesando datos:', error);
+          this.solicitudes = [];
+          this.error = 'Error al procesar los comentarios';
+        }
       },
       error: (error) => {
-        console.error('Error al cargar comentarios:', error);
-        // Datos de ejemplo en caso de error
+        console.error('💥 Error en la suscripción:', error);
+        this.cargando = false;
+        this.error = 'No se pudieron cargar los comentarios';
+        this.solicitudes = [];
       }
     });
   }
-    // Navegación
-    navigateToComparacion(): void {
-      this.router.navigate(['/comparacion']);
-    }
+
+  navigateToComparacion(): void {
+    this.router.navigate(['/comparacion']);
+  }
 
   navigateToPlataformas(): void {
     this.router.navigate(['/plataformas']);
