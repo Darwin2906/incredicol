@@ -7,7 +7,11 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["incredicol", "backend", "api"],
+  "keywords": [
+    "incredicol",
+    "backend",
+    "api"
+  ],
   "author": "Tu Nombre",
   "license": "ISC",
   "description": "Backend para Incredicol",
